@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ service.title }}{% endblock %}
+
+{% block content %}
+<!-- Service Hero -->
+<section class="service-hero d-flex align-items-center" 
+    {% if service.hero_image %}style="background-image: url('{{ service.hero_image.url }}');"{% else %}style="background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);"{% endif %}>
+    <div class="container position-relative text-white">
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-white-50">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'services:service_list' %}" class="text-white-50">Services</a></li>
+                <li class="breadcrumb-item active text-white" aria-current="page">{{ service.title }}</li>
+            </ol>
+        </nav>
+        <h1 class="display-4 fw-bold mb-3">{{ service.title }}</h1>
+        <p class="lead mb-0 col-lg-8">{{ service.short_description }}</p>
+    </div>
+</section>
+
+<!-- Service Content -->
+<section class="py-section">
+    <div class="container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <div class="mb-5">
+                    <h2 class="section-title">About Our {{ service.title }} Services</h2>
+                    <p class="lead text-muted">{{ service.full_description }}</p>
+                </div>
+                
+                <!-- Sub-services -->
+                <h3 class="mb-4">What We Offer</h3>
+                <div class="row g-4">
+                    {% for sub in sub_services %}
+                    <div class="col-md-6 animate-on-scroll">
+                        <div class="sub-service-card">
+                            <div class="d-flex align-items-start mb-3">
+                                <div class="me-3">
+                                    <div class="bg-light-green rounded-circle p-3">
+                                        <i class="bi {{ sub.icon|default:'bi-check-circle' }} text-success fs-4"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="mb-2">{{ sub.title }}</h5>
+                                    <p class="text-muted mb-0">{{ sub.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <p class="text-muted">Contact us to learn more about our {{ service.title }} services.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- CTA -->
+                <div class="mt-5 p-4 bg-light rounded">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h4 class="mb-2">Interested in {{ service.title }} Services?</h4>
+                            <p class="text-muted mb-md-0">Get in touch for a free consultation and estimate.</p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <a href="{% url 'contact:contact' %}" class="btn btn-success btn-lg">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="sticky-top" style="top: 100px;">
+                    <!-- Other Services -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-success text-white">
+                            <h6 class="mb-0">Our Services</h6>
+                        </div>
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush">
+                                {% for s in all_services %}
+                                <li class="list-group-item {% if s.slug == service.slug %}active bg-light-green{% endif %}">
+                                    <a href="{% url 'services:service_detail' s.slug %}" 
+                                       class="text-decoration-none {% if s.slug == service.slug %}text-success fw-bold{% else %}text-dark{% endif %}">
+                                        <i class="bi {{ s.icon|default:'bi-arrow-right' }} me-2"></i>
+                                        {{ s.title }}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Card -->
+                    <div class="card border-success">
+                        <div class="card-body text-center">
+                            <i class="bi bi-telephone-fill text-success display-4 mb-3"></i>
+                            <h5>Need Help?</h5>
+                            <p class="text-muted">Call us for immediate assistance</p>
+                            <a href="tel:2126332827" class="btn btn-outline-success btn-lg w-100">
+                                (212) 633-2827
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Gallery -->
+<section class="py-section bg-light">
+    <div class="container">
+        <h2 class="section-title text-center">See Our Work</h2>
+        <div class="text-center">
+            <a href="{% url 'gallery:gallery' %}" class="btn btn-success btn-lg px-5">View Gallery</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

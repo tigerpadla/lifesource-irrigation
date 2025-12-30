@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gallery{% endblock %}
+
+{% block extra_css %}
+<style>
+    .gallery-filter .btn {
+        border-radius: 20px;
+        padding: 0.5rem 1.5rem;
+    }
+    .gallery-filter .btn.active {
+        background-color: var(--ls-green);
+        border-color: var(--ls-green);
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1>Our Gallery</h1>
+        <p class="lead mb-0 opacity-75">Showcasing our work across NYC's rooftops and terraces</p>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="py-section">
+    <div class="container">
+        <!-- Category Filter -->
+        {% if categories %}
+        <div class="gallery-filter text-center mb-5">
+            <a href="{% url 'gallery:gallery' %}" 
+               class="btn {% if not active_category %}btn-success{% else %}btn-outline-success{% endif %} me-2 mb-2">
+                All
+            </a>
+            {% for cat in categories %}
+            <a href="{% url 'gallery:gallery' %}?category={{ cat.slug }}" 
+               class="btn {% if active_category == cat.slug %}btn-success{% else %}btn-outline-success{% endif %} me-2 mb-2">
+                {{ cat.name }}
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <!-- Gallery Grid -->
+        {% if projects %}
+        <div class="gallery-grid">
+            {% for project in projects %}
+            <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" 
+                 data-img="{{ project.image.url }}" data-title="{{ project.title }}" 
+                 data-desc="{{ project.description }}" data-loc="{{ project.location }}">
+                <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                <div class="overlay">
+                    <i class="bi bi-zoom-in"></i>
+                </div>
+            </div>
+            
+            <!-- Insert testimonial after every 4th project -->
+            {% if forloop.counter|divisibleby:4 and testimonials %}
+                {% with testimonial=testimonials|first %}
+                {% if testimonial %}
+                <div class="gallery-item testimonial-item bg-white d-flex align-items-center p-4" style="aspect-ratio: auto;">
+                    <div class="testimonial-content">
+                        <i class="bi bi-quote text-success fs-1 opacity-50"></i>
+                        <p class="fst-italic text-muted mb-3">"{{ testimonial.quote|truncatewords:30 }}"</p>
+                        <div class="fw-bold">{{ testimonial.client_name }}</div>
+                        <small class="text-success">{{ testimonial.location }}</small>
+                    </div>
+                </div>
+                {% endif %}
+                {% endwith %}
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- Placeholder Gallery -->
+        <div class="text-center py-5">
+            <i class="bi bi-images display-1 text-muted mb-4"></i>
+            <h3 class="text-muted">Gallery Coming Soon</h3>
+            <p class="text-muted">We're adding photos of our beautiful projects. Check back soon!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+{% if testimonials %}
+<section class="py-section bg-light">
+    <div class="container">
+        <h2 class="section-title text-center">What Our Clients Say</h2>
+        <div class="row g-4">
+            {% for testimonial in testimonials %}
+            <div class="col-md-4 animate-on-scroll">
+                <div class="testimonial-card h-100">
+                    <p>"{{ testimonial.quote }}"</p>
+                    <div class="client-name">{{ testimonial.client_name }}</div>
+                    <div class="client-location">{{ testimonial.location }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA -->
+<section class="py-section bg-success text-white text-center">
+    <div class="container">
+        <h2 class="mb-3">Want Your Space to Look This Good?</h2>
+        <p class="lead mb-4 opacity-75">Let's discuss your project.</p>
+        <a href="{% url 'contact:contact' %}" class="btn btn-light btn-lg px-5 text-success">Get a Free Quote</a>
+    </div>
+</section>
+
+<!-- Gallery Modal -->
+<div class="modal fade" id="galleryModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title">Project</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center p-0">
+                <img src="" alt="" class="img-fluid w-100">
+            </div>
+            <div class="modal-footer border-0 flex-column align-items-start">
+                <p class="modal-description text-muted mb-1"></p>
+                <small class="modal-location text-success"></small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const galleryModal = document.getElementById('galleryModal');
+    if (galleryModal) {
+        galleryModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const img = button.getAttribute('data-img');
+            const title = button.getAttribute('data-title');
+            const desc = button.getAttribute('data-desc');
+            const loc = button.getAttribute('data-loc');
+            
+            this.querySelector('.modal-title').textContent = title || 'Project';
+            this.querySelector('.modal-body img').src = img;
+            this.querySelector('.modal-description').textContent = desc || '';
+            this.querySelector('.modal-location').textContent = loc ? '📍 ' + loc : '';
+        });
+    }
+});
+</script>
+{% endblock %}

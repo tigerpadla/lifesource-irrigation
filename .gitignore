@@ -1,0 +1,84 @@
+# =====================
+# Python bytecode / caches
+# =====================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+.Python
+
+# =====================
+# Virtual environments
+# =====================
+.venv/
+venv/
+env/
+ENV/
+env.py
+.env
+.env.local
+.envrc
+
+# =====================
+# Django / project files
+# =====================
+*.log
+*.sqlite3
+db.sqlite3
+db.sqlite3-journal
+local_settings.py
+staticfiles/
+media/
+
+# =====================
+# Test / coverage / build artifacts
+# =====================
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+.cache
+.pytest_cache/
+.tox/
+.nox/
+*.egg
+*.egg-info/
+build/
+dist/
+eggs/
+.eggs/
+*.manifest
+*.spec
+
+# =====================
+# IDEs / editors
+# =====================
+.vscode/
+.idea/
+.spyderproject
+.spyproject
+.ropeproject
+*.swp
+*.swo
+*~
+
+# =====================
+# OS files
+# =====================
+.DS_Store
+Thumbs.db
+
+# =====================
+# Project-specific / vendor files
+# =====================
+core.Microsoft*
+core.mongo*
+core.python*
+cloudinary_python.txt
+
+# =====================
+# Heroku / misc
+# =====================
+*.pyc

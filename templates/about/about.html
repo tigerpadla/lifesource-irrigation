@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <p class="text-uppercase letter-spacing-2 mb-2 opacity-75">DESIGN | BUILD | MAINTAIN</p>
+        <h1>Our Team for Your Dreams</h1>
+    </div>
+</section>
+
+<!-- Company Story -->
+<section class="py-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="{% static 'images/about-hero.jpg' %}" alt="NYC Rooftop Garden" class="img-fluid rounded shadow" 
+                     onerror="this.src='https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=600'; this.onerror=null;">
+            </div>
+            <div class="col-lg-6">
+                <h2 class="section-title">Our Story</h2>
+                <p class="lead text-muted">
+                    LifeSource Irrigation is a full-service irrigation, gardening, and exterior lighting 
+                    company with over three decades of experience serving New York City.
+                </p>
+                <p class="text-muted">
+                    From extensive transformations of rooftop gardens to power washing in hard-to-reach 
+                    terraces, irrigation installations for hands-off plant care to lighting arrangements 
+                    that set the balcony aglow, the LifeSource team is dedicated to understanding client 
+                    needs and delivering exceptional results.
+                </p>
+                <p class="text-muted">
+                    What sets us apart is our commitment to long-term relationships. Our average client 
+                    partnership spans 15 years—a testament to our dedication, reliability, and the 
+                    quality of our work.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Declan's Story -->
+<section class="py-section bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+                <img src="{% static 'images/declan.jpg' %}" alt="Declan Keane" class="img-fluid rounded shadow"
+                     onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400'; this.onerror=null;">
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <h2 class="section-title">Meet Declan Keane</h2>
+                <p class="lead text-muted">Founder & Principal</p>
+                <p class="text-muted">
+                    Born in Kilnamona, Co. Clare, Ireland, Declan brings over 30 years of irrigation 
+                    experience to every project. With an Agricultural Science degree from University 
+                    College Dublin and a Higher Diploma in Education, he combines scientific knowledge 
+                    with practical expertise.
+                </p>
+                <p class="text-muted">
+                    Declan arrived in New York City on March 25th, 1988, and quickly established himself 
+                    as a pioneer in bringing drip irrigation technology to NYC's unique rooftop environments. 
+                    Previously operating as "Estelle Irrigation," he founded LifeSource to expand his 
+                    vision of transforming urban outdoor spaces.
+                </p>
+                <p class="text-muted">
+                    His deep understanding of plants, water systems, and NYC's challenging microclimates 
+                    has made LifeSource the trusted choice for discerning property owners across Manhattan.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Members -->
+<section class="py-section">
+    <div class="container">
+        <h2 class="section-title text-center">Our Team</h2>
+        <div class="row g-4 justify-content-center">
+            {% if team_members %}
+                {% for member in team_members %}
+                <div class="col-md-4 col-lg-3 animate-on-scroll">
+                    <div class="team-card">
+                        {% if member.image %}
+                        <img src="{{ member.image.url }}" alt="{{ member.name }}">
+                        {% else %}
+                        <img src="https://ui-avatars.com/api/?name={{ member.name|urlencode }}&background=2e7d32&color=fff&size=200" alt="{{ member.name }}">
+                        {% endif %}
+                        <h5>{{ member.name }}</h5>
+                        <div class="role">{{ member.role }}</div>
+                        <p class="text-muted small">{{ member.bio|truncatewords:20 }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Placeholder team members -->
+                <div class="col-md-4 col-lg-3 animate-on-scroll">
+                    <div class="team-card">
+                        <img src="https://ui-avatars.com/api/?name=Leo&background=2e7d32&color=fff&size=200" alt="Leo">
+                        <h5>Leo</h5>
+                        <div class="role">Senior Technician</div>
+                        <p class="text-muted small">Expert irrigation technician with years of experience.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 animate-on-scroll">
+                    <div class="team-card">
+                        <img src="https://ui-avatars.com/api/?name=FG&background=2e7d32&color=fff&size=200" alt="FG">
+                        <h5>FG</h5>
+                        <div class="role">Garden Specialist</div>
+                        <p class="text-muted small">Passionate about creating beautiful urban gardens.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 animate-on-scroll">
+                    <div class="team-card">
+                        <img src="https://ui-avatars.com/api/?name=Junior&background=2e7d32&color=fff&size=200" alt="Junior">
+                        <h5>Junior</h5>
+                        <div class="role">Technician</div>
+                        <p class="text-muted small">Dedicated team member supporting all our projects.</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Irish-American Corner -->
+<section class="py-section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="irish-corner p-4 p-lg-5 bg-white rounded shadow-sm">
+                    <div class="text-center mb-4">
+                        <span class="shamrock display-4">☘️</span>
+                        <h2 class="section-title text-center mt-3">Irish-American Corner</h2>
+                    </div>
+                    
+                    <p class="text-muted text-center mb-4">
+                        At LifeSource, we're proud of our Irish roots. Declan's journey from County Clare 
+                        to New York City is part of a rich tradition of Irish immigrants who have helped 
+                        build and beautify America.
+                    </p>
+                    
+                    {% if irish_facts %}
+                        {% for fact in irish_facts %}
+                        <div class="mb-4 p-3 bg-light-green rounded">
+                            <h5 class="text-success">
+                                {% if fact.category == 'proverb' %}🍀{% elif fact.category == 'song' %}🎵{% elif fact.category == 'history' %}📜{% else %}💡{% endif %}
+                                {{ fact.title }}
+                            </h5>
+                            <p class="text-muted mb-0">{{ fact.content }}</p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <!-- Default Irish content -->
+                        <div class="mb-4 p-3 bg-light-green rounded">
+                            <h5 class="text-success">🍀 Irish Proverb</h5>
+                            <p class="text-muted mb-0 fst-italic">
+                                "Ní neart go cur le chéile" — There is no strength without unity.
+                            </p>
+                        </div>
+                        <div class="mb-4 p-3 bg-light-green rounded">
+                            <h5 class="text-success">📜 Did You Know?</h5>
+                            <p class="text-muted mb-0">
+                                County Clare, Declan's birthplace, is home to the famous Cliffs of Moher 
+                                and has a rich tradition of traditional Irish music.
+                            </p>
+                        </div>
+                        <div class="p-3 bg-light-green rounded">
+                            <h5 class="text-success">💡 Irish in NYC</h5>
+                            <p class="text-muted mb-0">
+                                Irish immigrants have shaped New York City since the 1800s, contributing 
+                                to everything from building the Brooklyn Bridge to establishing the city's 
+                                parks and gardens.
+                            </p>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="text-center mt-4">
+                        <a href="{% url 'newsletter:newsletter_list' %}" class="btn btn-outline-success">
+                            <i class="bi bi-envelope me-2"></i>More Irish Stories in Our Newsletter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-section bg-success text-white text-center">
+    <div class="container">
+        <h2 class="mb-3">Ready to Work With Us?</h2>
+        <p class="lead mb-4 opacity-75">Join our family of satisfied clients across NYC.</p>
+        <a href="{% url 'contact:contact' %}" class="btn btn-light btn-lg px-5 text-success">Contact Us Today</a>
+    </div>
+</section>
+{% endblock %}

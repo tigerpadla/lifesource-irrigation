@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Newsletter{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1>Newsletter</h1>
+        <p class="lead mb-0 opacity-75">Seasonal tips, Irish heritage, and garden inspiration</p>
+    </div>
+</section>
+
+<!-- Newsletter Intro -->
+<section class="py-section bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 mb-4 mb-lg-0">
+                <h2 class="section-title">Stay Connected</h2>
+                <p class="lead text-muted">
+                    Join our newsletter for seasonal gardening tips, irrigation maintenance reminders, 
+                    and a touch of Irish heritage in every issue.
+                </p>
+                <ul class="list-unstyled text-muted">
+                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Seasonal care reminders</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Expert gardening tips for NYC</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Irish proverbs and fun facts</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Exclusive offers for subscribers</li>
+                </ul>
+            </div>
+            <div class="col-lg-5">
+                <div class="card border-success">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-center mb-3">
+                            <i class="bi bi-envelope-heart text-success me-2"></i>Subscribe
+                        </h5>
+                        <form action="{% url 'newsletter:subscribe' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <div class="mb-3">
+                                <input type="email" name="email" class="form-control form-control-lg" 
+                                       placeholder="Enter your email" required>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-lg w-100">
+                                Subscribe Now
+                            </button>
+                            <small class="text-muted d-block text-center mt-2">
+                                No spam, unsubscribe anytime.
+                            </small>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Archive -->
+<section class="py-section">
+    <div class="container">
+        <h2 class="section-title text-center">Newsletter Archive</h2>
+        
+        {% if newsletters %}
+        <div class="row g-4">
+            {% for newsletter in newsletters %}
+            <div class="col-md-6 col-lg-4 animate-on-scroll">
+                <article class="card h-100 border-0 shadow-sm">
+                    {% if newsletter.image %}
+                    <img src="{{ newsletter.image.url }}" class="card-img-top" alt="{{ newsletter.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-light-green d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="bi bi-newspaper text-success display-3"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="text-muted small mb-2">
+                            <i class="bi bi-calendar me-1"></i>
+                            {{ newsletter.published_at|date:"F j, Y" }}
+                        </div>
+                        <h5 class="card-title">{{ newsletter.title }}</h5>
+                        <p class="card-text text-muted">{{ newsletter.excerpt|truncatewords:25 }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-0 pt-0">
+                        <a href="{{ newsletter.get_absolute_url }}" class="btn btn-outline-success w-100">
+                            Read More <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- Coming Soon -->
+        <div class="text-center py-5">
+            <i class="bi bi-newspaper display-1 text-muted mb-4"></i>
+            <h3 class="text-muted">Newsletter Coming Soon</h3>
+            <p class="text-muted mb-4">
+                We're preparing our first newsletter. Subscribe above to be the first to receive it!
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Irish Corner Preview -->
+<section class="py-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="irish-corner p-4 p-lg-5 bg-white rounded shadow-sm">
+                    <div class="text-center mb-4">
+                        <span class="shamrock display-4">☘️</span>
+                        <h3 class="mt-3">A Taste of Ireland in Every Issue</h3>
+                    </div>
+                    <p class="text-muted text-center">
+                        Each newsletter features an Irish proverb, historical fact, or traditional story. 
+                        It's our way of sharing the heritage that Declan brought from County Clare to 
+                        the rooftops of New York City.
+                    </p>
+                    <div class="p-3 bg-light-green rounded mt-4">
+                        <p class="mb-0 text-center fst-italic">
+                            "Is fearr Gaeilge briste, ná Béarla cliste"<br>
+                            <small class="text-muted">Broken Irish is better than clever English</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

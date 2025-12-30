@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" style="background-image: url('{% static 'images/hero-bg.jpg' %}');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 hero-content">
+                <h1>LifeSource Irrigation</h1>
+                <p class="lead">
+                    LifeSource Irrigation is a full-service irrigation, gardening, and exterior 
+                    lighting company with over three decades of experience. From extensive 
+                    transformations of rooftop gardens to power washing in hard-to-reach terraces, 
+                    irrigation installations for hands-off plant care to lighting arrangements 
+                    that set the balcony aglow, the LifeSource team is dedicated to understanding 
+                    client needs and delivering exceptional results.
+                </p>
+                <div class="mt-4">
+                    <a href="{% url 'contact:contact' %}" class="btn btn-success btn-lg px-5 me-3">Contact Us</a>
+                    <a href="{% url 'services:service_list' %}" class="btn btn-outline-success btn-lg px-4">Our Services</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tagline Banner -->
+<section class="py-4 bg-white">
+    <div class="container text-center">
+        <p class="tagline-banner mb-0">
+            design <span>|</span> build <span>|</span> maintain
+        </p>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-section bg-light">
+    <div class="container">
+        <div class="row g-4">
+            {% if services %}
+                {% for service in services %}
+                <div class="col-md-4 animate-on-scroll">
+                    <div class="card service-card h-100">
+                        {% if service.image %}
+                        <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.title }}">
+                        {% else %}
+                        <img src="{% static 'images/service-placeholder.jpg' %}" class="card-img-top" alt="{{ service.title }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ service.title }}</h5>
+                            <p class="card-text">{{ service.short_description }}</p>
+                            <a href="{% url 'services:service_detail' service.slug %}" class="btn btn-outline-success">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default services when database is empty -->
+                <div class="col-md-4 animate-on-scroll">
+                    <div class="card service-card h-100">
+                        <img src="{% static 'images/irrigation.jpg' %}" class="card-img-top" alt="Irrigation">
+                        <div class="card-body">
+                            <h5 class="card-title">Irrigation</h5>
+                            <p class="card-text">Installations, maintenance, and repairs for hands-off plant hydration.</p>
+                            <a href="{% url 'services:service_detail' 'irrigation' %}" class="btn btn-outline-success">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-on-scroll">
+                    <div class="card service-card h-100">
+                        <img src="{% static 'images/gardening.jpg' %}" class="card-img-top" alt="Gardening">
+                        <div class="card-body">
+                            <h5 class="card-title">Gardening</h5>
+                            <p class="card-text">Transformations and tender care for sacred green spaces, from bulbs to blooms.</p>
+                            <a href="{% url 'services:service_detail' 'gardening' %}" class="btn btn-outline-success">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-on-scroll">
+                    <div class="card service-card h-100">
+                        <img src="{% static 'images/lighting.jpg' %}" class="card-img-top" alt="Lighting">
+                        <div class="card-body">
+                            <h5 class="card-title">Lighting</h5>
+                            <p class="card-text">Customized lighting design to extend garden enjoyment long after the sun has set.</p>
+                            <a href="{% url 'services:service_detail' 'lighting' %}" class="btn btn-outline-success">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Trust Indicators -->
+<section class="py-section bg-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 col-6 animate-on-scroll">
+                <div class="trust-item">
+                    <div class="number">30+</div>
+                    <div class="label">Years Experience</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 animate-on-scroll">
+                <div class="trust-item">
+                    <div class="number">500+</div>
+                    <div class="label">Projects Completed</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 animate-on-scroll">
+                <div class="trust-item">
+                    <div class="number">15</div>
+                    <div class="label">Avg. Years Client Retention</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 animate-on-scroll">
+                <div class="trust-item">
+                    <div class="number">NYC</div>
+                    <div class="label">Based & Serving</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Preview -->
+<section class="py-section bg-light">
+    <div class="container">
+        <h2 class="section-title text-center">Our Work</h2>
+        <div class="gallery-grid">
+            {% if projects %}
+                {% for project in projects %}
+                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                    <div class="overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Placeholder gallery items -->
+                {% for i in "123456" %}
+                <div class="gallery-item">
+                    <img src="{% static 'images/gallery-placeholder.jpg' %}" alt="Project {{ forloop.counter }}">
+                    <div class="overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'gallery:gallery' %}" class="btn btn-success btn-lg px-5">View Full Gallery</a>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-section bg-white">
+    <div class="container">
+        <h2 class="section-title text-center">What Our Clients Say</h2>
+        <div class="row g-4">
+            {% if testimonials %}
+                {% for testimonial in testimonials %}
+                <div class="col-md-4 animate-on-scroll">
+                    <div class="testimonial-card h-100">
+                        <p>"{{ testimonial.quote }}"</p>
+                        <div class="client-name">{{ testimonial.client_name }}</div>
+                        <div class="client-location">{{ testimonial.location }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Placeholder testimonials -->
+                <div class="col-md-4 animate-on-scroll">
+                    <div class="testimonial-card h-100">
+                        <p>"LifeSource transformed our rooftop into a true oasis. The irrigation system works flawlessly and we never have to worry about our plants."</p>
+                        <div class="client-name">Sarah M.</div>
+                        <div class="client-location">Upper West Side</div>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-on-scroll">
+                    <div class="testimonial-card h-100">
+                        <p>"Declan and his team have maintained our terrace garden for over 15 years. Their attention to detail and knowledge is unmatched."</p>
+                        <div class="client-name">James & Linda K.</div>
+                        <div class="client-location">Tribeca</div>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-on-scroll">
+                    <div class="testimonial-card h-100">
+                        <p>"The lighting design they created for our garden is absolutely stunning. We can finally enjoy our outdoor space in the evenings."</p>
+                        <div class="client-name">Michael R.</div>
+                        <div class="client-location">Chelsea</div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-section bg-success text-white text-center">
+    <div class="container">
+        <h2 class="mb-3">Ready to Transform Your Outdoor Space?</h2>
+        <p class="lead mb-4 opacity-75">Contact us today for a free consultation and estimate.</p>
+        <a href="{% url 'contact:contact' %}" class="btn btn-light btn-lg px-5 text-success">Get Started</a>
+    </div>
+</section>
+
+<!-- Gallery Modal -->
+<div class="modal fade" id="galleryModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Project</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

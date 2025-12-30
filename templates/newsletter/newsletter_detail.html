@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ newsletter.title }}{% endblock %}
+
+{% block content %}
+<!-- Article Header -->
+<section class="page-header">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-white-50">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'newsletter:newsletter_list' %}" class="text-white-50">Newsletter</a></li>
+                <li class="breadcrumb-item active text-white" aria-current="page">{{ newsletter.title|truncatewords:5 }}</li>
+            </ol>
+        </nav>
+        <h1>{{ newsletter.title }}</h1>
+        <p class="mb-0 opacity-75">
+            <i class="bi bi-calendar me-2"></i>{{ newsletter.published_at|date:"F j, Y" }}
+        </p>
+    </div>
+</section>
+
+<!-- Article Content -->
+<section class="py-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <article class="newsletter-article">
+                    {% if newsletter.image %}
+                    <img src="{{ newsletter.image.url }}" alt="{{ newsletter.title }}" 
+                         class="img-fluid rounded mb-4 w-100" style="max-height: 400px; object-fit: cover;">
+                    {% endif %}
+                    
+                    <div class="content text-muted" style="font-size: 1.1rem; line-height: 1.8;">
+                        {{ newsletter.content|linebreaks }}
+                    </div>
+                    
+                    {% if newsletter.irish_fact %}
+                    <!-- Irish Corner -->
+                    <div class="irish-corner p-4 mt-5 bg-light-green rounded">
+                        <h5 class="text-success">
+                            <span class="shamrock me-2">☘️</span>Irish Corner
+                        </h5>
+                        <p class="mb-0 fst-italic text-muted">{{ newsletter.irish_fact }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Share Buttons -->
+                    <div class="mt-5 pt-4 border-top">
+                        <h6 class="text-muted mb-3">Share this article:</h6>
+                        <div class="d-flex gap-2">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
+                               target="_blank" class="btn btn-outline-secondary">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                            <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ newsletter.title|urlencode }}" 
+                               target="_blank" class="btn btn-outline-secondary">
+                                <i class="bi bi-twitter-x"></i>
+                            </a>
+                            <a href="mailto:?subject={{ newsletter.title|urlencode }}&body={{ request.build_absolute_uri }}" 
+                               class="btn btn-outline-secondary">
+                                <i class="bi bi-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="sticky-top" style="top: 100px;">
+                    <!-- Subscribe Box -->
+                    <div class="card border-success mb-4">
+                        <div class="card-body text-center">
+                            <i class="bi bi-envelope-heart text-success display-4 mb-3"></i>
+                            <h5>Subscribe to Our Newsletter</h5>
+                            <p class="text-muted small">Get updates delivered to your inbox.</p>
+                            <form action="{% url 'newsletter:subscribe' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <div class="input-group">
+                                    <input type="email" name="email" class="form-control" placeholder="Your email" required>
+                                    <button type="submit" class="btn btn-success">Subscribe</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Related Articles -->
+                    {% if related %}
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-white">
+                            <h6 class="mb-0">More Articles</h6>
+                        </div>
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush">
+                                {% for item in related %}
+                                <li class="list-group-item">
+                                    <a href="{{ item.get_absolute_url }}" class="text-decoration-none">
+                                        <div class="text-dark fw-medium">{{ item.title }}</div>
+                                        <small class="text-muted">{{ item.published_at|date:"M j, Y" }}</small>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Back to Newsletter -->
+<section class="py-4 bg-light">
+    <div class="container text-center">
+        <a href="{% url 'newsletter:newsletter_list' %}" class="btn btn-outline-success">
+            <i class="bi bi-arrow-left me-2"></i>Back to Newsletter Archive
+        </a>
+    </div>
+</section>
+{% endblock %}
