@@ -6,7 +6,17 @@
 {% block content %}
 <!-- Service Hero -->
 <section class="service-hero d-flex align-items-center" 
-    {% if service.hero_image %}style="background-image: url('{{ service.hero_image.url }}');"{% else %}style="background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);"{% endif %}>
+    {% if service.hero_image %}
+        style="background-image: url('{{ service.hero_image.url }}');"
+    {% elif service.slug == 'irrigation' %}
+        style="background-image: url('{% static 'images/irrigation.jpg' %}');"
+    {% elif service.slug == 'gardening' %}
+        style="background-image: url('{% static 'images/gardening.jpg' %}');"
+    {% elif service.slug == 'lighting' %}
+        style="background-image: url('{% static 'images/lighting.jpg' %}');"
+    {% else %}
+        style="background-image: url('{% static 'images/hero-bg.jpg' %}');"
+    {% endif %}>
     <div class="container position-relative text-white">
         <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb">

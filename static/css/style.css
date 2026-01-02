@@ -5,13 +5,19 @@
 
 /* CSS Variables */
 :root {
-    --ls-green: #2e7d32;
-    --ls-green-light: #4caf50;
-    --ls-green-dark: #1b5e20;
+    /* Brand Colors - from logo */
+    --ls-green-brand: #A4BB4B;      /* Logo green - for accents, decorative */
+    --ls-green: #6B7A30;            /* Accessible green - for text/buttons (passes WCAG AA) */
+    --ls-green-dark: #4A5522;       /* Dark green - for hover states */
+    --ls-green-light: #C5D67A;      /* Light green - for subtle backgrounds */
+    
+    /* Supporting Colors */
     --ls-gold: #c9a227;
     --ls-cream: #fefefe;
     --ls-gray: #6c757d;
     --ls-dark: #212529;
+    
+    /* Typography */
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Open Sans', sans-serif;
 }
@@ -82,6 +88,10 @@ h1, h2, h3, h4, h5, h6 {
 .hero-content {
     position: relative;
     z-index: 1;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 2.5rem;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
 }
 
 .hero h1 {
@@ -93,7 +103,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero .lead {
     font-size: 1.25rem;
-    color: var(--ls-gray);
+    color: var(--ls-dark);
     line-height: 1.8;
     max-width: 500px;
 }
@@ -224,7 +234,7 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(46, 125, 50, 0.8);
+    background: rgba(107, 122, 48, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -300,7 +310,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Newsletter Bar */
 .newsletter-bar {
-    background: linear-gradient(135deg, var(--ls-green) 0%, var(--ls-green-dark) 100%);
+    background: linear-gradient(135deg, var(--ls-green) 0%, var(--ls-green-dark) 100%) !important;
 }
 
 /* Footer */
@@ -324,33 +334,52 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Buttons */
 .btn-success {
-    background-color: var(--ls-green);
-    border-color: var(--ls-green);
+    background-color: var(--ls-green) !important;
+    border-color: var(--ls-green) !important;
 }
 
-.btn-success:hover {
-    background-color: var(--ls-green-dark);
-    border-color: var(--ls-green-dark);
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+    background-color: var(--ls-green-dark) !important;
+    border-color: var(--ls-green-dark) !important;
 }
 
 .btn-outline-success {
-    color: var(--ls-green);
-    border-color: var(--ls-green);
+    color: var(--ls-green) !important;
+    border-color: var(--ls-green) !important;
 }
 
-.btn-outline-success:hover {
-    background-color: var(--ls-green);
-    border-color: var(--ls-green);
+.btn-outline-success:hover,
+.btn-outline-success:focus,
+.btn-outline-success:active {
+    background-color: var(--ls-green) !important;
+    border-color: var(--ls-green) !important;
+    color: white !important;
+}
+
+/* Bootstrap Background Overrides */
+.bg-success {
+    background-color: var(--ls-green) !important;
+}
+
+.text-success {
+    color: var(--ls-green) !important;
 }
 
 /* Irish Heritage Section */
 .irish-corner {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e9 100%);
-    border-left: 4px solid var(--ls-green);
+    background: linear-gradient(135deg, #f8f9fa 0%, #f4f7e6 100%);
+    border-left: 4px solid var(--ls-green-brand);
 }
 
-.shamrock {
-    color: var(--ls-green);
+.irish-heart {
+    display: block;
+    margin: 0 auto;
+}
+
+.irish-heart-sm {
+    vertical-align: middle;
 }
 
 /* Page Headers */
@@ -415,7 +444,7 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+    background: linear-gradient(135deg, rgba(74, 85, 34, 0.85) 0%, rgba(107, 122, 48, 0.6) 100%);
 }
 
 .sub-service-card {
@@ -427,8 +456,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sub-service-card:hover {
-    border-color: var(--ls-green);
-    box-shadow: 0 10px 30px rgba(46, 125, 50, 0.1);
+    border-color: var(--ls-green-brand);
+    box-shadow: 0 10px 30px rgba(164, 187, 75, 0.2);
 }
 
 /* Team Member Card */
@@ -441,7 +470,7 @@ h1, h2, h3, h4, h5, h6 {
     height: 200px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid var(--ls-green);
+    border: 4px solid var(--ls-green-brand);
     margin-bottom: 1.5rem;
 }
 
@@ -473,7 +502,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Utility Classes */
 .bg-light-green {
-    background-color: #e8f5e9;
+    background-color: #f4f7e6;
 }
 
 .text-green {
