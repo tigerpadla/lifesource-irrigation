@@ -9,7 +9,7 @@ A professional website for **LifeSource Irrigation** - a full-service irrigation
 
 ## 🌐 Live Site
 
-**Production:** [https://lifesource-irrigation-f72e2fb66193.herokuapp.com/](https://lifesource-irrigation-f72e2fb66193.herokuapp.com/)
+**Production:** [https://lifesource-irrigation-c72210771a40.herokuapp.com/](https://lifesource-irrigation-c72210771a40.herokuapp.com/)
 
 **Admin Panel:** `/admin/`
 
