@@ -6,7 +6,7 @@ class ContactInquiry(models.Model):
     SERVICE_CHOICES = [
         ('new_installation', 'Free Estimate - New Installation'),
         ('spring_startup', 'Spring Start-Up'),
-        ('winterization', 'Winterization'),
+        ('irrigation', 'Irrigation'),
         ('repair', 'Service & Repair'),
         ('maintenance', 'Maintenance Agreement'),
         ('lighting', 'Landscape Lighting'),
