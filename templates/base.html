@@ -105,15 +105,33 @@
                     <p class="mb-0 opacity-75">Get seasonal tips, Irish heritage stories, and exclusive offers.</p>
                 </div>
                 <div class="col-lg-6">
-                    <form action="{% url 'newsletter:subscribe' %}" method="post" class="d-flex gap-2">
+                    <form id="newsletterForm" action="{% url 'newsletter:subscribe' %}" method="post" class="d-flex gap-2">
                         {% csrf_token %}
-                        <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                        <input type="email" name="email" id="newsletterEmail" class="form-control" placeholder="Enter your email" required>
                         <button type="submit" class="btn btn-light text-success fw-semibold">Subscribe</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Newsletter Success Modal -->
+    <div class="modal fade" id="newsletterModal" tabindex="-1" aria-labelledby="newsletterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center pb-5">
+                    <div id="newsletterModalIcon" class="mb-4">
+                        <i class="bi bi-check-circle-fill text-success display-1"></i>
+                    </div>
+                    <h4 id="newsletterModalTitle" class="mb-3">Thank You!</h4>
+                    <p id="newsletterModalMessage" class="text-muted mb-0">Thanks for subscribing! You'll receive our next newsletter.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer bg-dark text-white pt-5 pb-3">

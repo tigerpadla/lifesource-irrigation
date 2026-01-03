@@ -18,8 +18,8 @@
                     that set the balcony aglow, the LifeSource team is dedicated to understanding 
                     client needs and delivering exceptional results.
                 </p>
-                <div class="mt-4">
-                    <a href="{% url 'contact:contact' %}" class="btn btn-success btn-lg px-5 me-3">Contact Us</a>
+                <div class="mt-4 d-flex flex-column flex-sm-row gap-3">
+                    <a href="{% url 'contact:contact' %}" class="btn btn-success btn-lg px-5">Contact Us</a>
                     <a href="{% url 'services:service_list' %}" class="btn btn-outline-success btn-lg px-4">Our Services</a>
                 </div>
             </div>
@@ -133,8 +133,10 @@
         <div class="gallery-grid">
             {% if projects %}
                 {% for project in projects %}
-                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal">
-                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal"
+                     data-img="{{ project.image.url }}" data-title="{{ project.title }}"
+                     data-desc="{{ project.description }}" data-loc="{{ project.location }}">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">
                     <div class="overlay">
                         <i class="bi bi-zoom-in"></i>
                     </div>
@@ -260,14 +262,40 @@
 <div class="modal fade" id="galleryModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header border-0">
                 <h5 class="modal-title">Project</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body text-center">
-                <img src="" alt="" class="img-fluid">
+            <div class="modal-body text-center p-0">
+                <img src="" alt="" class="img-fluid w-100">
+            </div>
+            <div class="modal-footer border-0 flex-column align-items-start">
+                <p class="modal-description text-muted mb-1"></p>
+                <small class="modal-location text-success"></small>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const galleryModal = document.getElementById('galleryModal');
+    if (galleryModal) {
+        galleryModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const img = button.getAttribute('data-img');
+            const title = button.getAttribute('data-title');
+            const desc = button.getAttribute('data-desc');
+            const loc = button.getAttribute('data-loc');
+            
+            this.querySelector('.modal-title').textContent = title || 'Project';
+            this.querySelector('.modal-body img').src = img;
+            this.querySelector('.modal-description').textContent = desc || '';
+            this.querySelector('.modal-location').textContent = loc ? '📍 ' + loc : '';
+        });
+    }
+});
+</script>
 {% endblock %}

@@ -77,15 +77,133 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Newsletter form submission
-    const newsletterForm = document.querySelector('.newsletter-bar form');
+    // Newsletter form AJAX submission with modal
+    const newsletterForm = document.getElementById('newsletterForm');
     if (newsletterForm) {
         newsletterForm.addEventListener('submit', function(e) {
-            const emailInput = this.querySelector('input[type="email"]');
-            if (emailInput && emailInput.value) {
-                // Form will submit normally to Django backend
-                console.log('Newsletter signup:', emailInput.value);
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('newsletterEmail');
+            const email = emailInput.value.trim();
+            const csrfToken = this.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                showNewsletterModal(false, 'Invalid Email', 'Please enter a valid email address.');
+                return;
             }
+            
+            // Submit via AJAX
+            fetch(this.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrfToken
+                },
+                body: `email=${encodeURIComponent(email)}&csrfmiddlewaretoken=${csrfToken}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                showNewsletterModal(data.success, data.success ? 'Thank You!' : 'Oops!', data.message);
+                if (data.success) {
+                    emailInput.value = '';
+                }
+            })
+            .catch(error => {
+                showNewsletterModal(false, 'Error', 'Something went wrong. Please try again.');
+            });
+        });
+    }
+    
+    // Show newsletter modal
+    function showNewsletterModal(success, title, message) {
+        const modal = document.getElementById('newsletterModal');
+        const icon = document.getElementById('newsletterModalIcon');
+        const titleEl = document.getElementById('newsletterModalTitle');
+        const messageEl = document.getElementById('newsletterModalMessage');
+        
+        if (success) {
+            icon.innerHTML = '<i class="bi bi-check-circle-fill text-success display-1"></i>';
+        } else {
+            icon.innerHTML = '<i class="bi bi-exclamation-circle-fill text-warning display-1"></i>';
+        }
+        
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        
+        const bsModal = new bootstrap.Modal(modal);
+        bsModal.show();
+    }
+    
+    // Contact form validation
+    const contactForm = document.querySelector('.contact-form form');
+    if (contactForm) {
+        // Phone validation
+        const phoneInput = document.getElementById('id_phone');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function() {
+                // Allow digits, spaces, dashes, parentheses, plus
+                this.value = this.value.replace(/[^\d\s\-\(\)\+]/g, '');
+            });
+            
+            phoneInput.addEventListener('blur', function() {
+                const digits = this.value.replace(/\D/g, '');
+                if (digits.length > 0 && digits.length < 10) {
+                    this.setCustomValidity('Please enter a valid phone number');
+                    this.classList.add('is-invalid');
+                } else {
+                    this.setCustomValidity('');
+                    if (digits.length >= 10) this.classList.remove('is-invalid');
+                }
+            });
+        }
+        
+        // Email validation
+        const emailInput = document.getElementById('id_email');
+        if (emailInput) {
+            emailInput.addEventListener('blur', function() {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (this.value && !emailRegex.test(this.value)) {
+                    this.setCustomValidity('Please enter a valid email address');
+                    this.classList.add('is-invalid');
+                } else {
+                    this.setCustomValidity('');
+                    if (this.value) this.classList.remove('is-invalid');
+                }
+            });
+        }
+        
+        // Services validation - at least one must be selected
+        contactForm.addEventListener('submit', function(e) {
+            const checkboxes = this.querySelectorAll('input[name="services_needed"]:checked');
+            if (checkboxes.length === 0) {
+                e.preventDefault();
+                const servicesFieldset = this.querySelector('fieldset:has(input[name="services_needed"])') || 
+                                         this.querySelectorAll('fieldset')[2];
+                if (servicesFieldset) {
+                    servicesFieldset.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    const firstCheckbox = this.querySelector('input[name="services_needed"]');
+                    if (firstCheckbox) {
+                        firstCheckbox.setCustomValidity('Please select at least one service');
+                        firstCheckbox.reportValidity();
+                    }
+                }
+                return false;
+            }
+            
+            // Clear custom validity on all service checkboxes
+            this.querySelectorAll('input[name="services_needed"]').forEach(cb => {
+                cb.setCustomValidity('');
+            });
+        });
+        
+        // Clear services validation when any is checked
+        contactForm.querySelectorAll('input[name="services_needed"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                this.setCustomValidity('');
+            });
         });
     }
 

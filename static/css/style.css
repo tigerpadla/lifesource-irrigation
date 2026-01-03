@@ -54,6 +54,47 @@ h1, h2, h3, h4, h5, h6 {
     width: auto;
 }
 
+/* Medium screen navbar adjustments */
+@media (max-width: 1199.98px) and (min-width: 992px) {
+    .navbar-brand img {
+        max-height: 50px;
+    }
+    .nav-link {
+        padding: 0.5rem 0.6rem !important;
+        font-size: 0.9rem;
+    }
+    .nav-link.btn-success {
+        white-space: nowrap;
+    }
+}
+
+/* Mobile navbar adjustments */
+@media (max-width: 991.98px) {
+    .navbar-brand img {
+        max-height: 45px;
+    }
+    
+    .navbar > .container {
+        flex-wrap: wrap;
+    }
+    
+    .navbar-collapse {
+        flex-basis: 100%;
+        width: 100%;
+    }
+    
+    .navbar-nav {
+        padding-top: 1rem;
+    }
+    
+    .navbar-nav .nav-link.btn-success {
+        display: inline-block;
+        width: auto;
+        margin-top: 0.5rem;
+        margin-left: 0 !important;
+    }
+}
+
 /* Service Sidebar - keep below navbar */
 .col-lg-4 .sticky-top {
     z-index: 1000;
@@ -138,11 +179,32 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 768px) {
     .hero {
-        min-height: 60vh;
+        min-height: auto;
+        padding: 2rem 0;
+        background-attachment: scroll;
+    }
+    
+    .hero::before {
+        background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.6) 100%);
+    }
+    
+    .hero .container {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+    
+    .hero-content {
+        background: rgba(255, 255, 255, 0.92);
+        padding: 1.5rem;
+        margin-top: 1rem;
     }
     
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
+    }
+    
+    .hero .lead {
+        font-size: 1rem;
     }
 }
 
