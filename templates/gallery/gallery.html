@@ -52,7 +52,7 @@
             <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" 
                  data-img="{{ project.image.url }}" data-title="{{ project.title }}" 
                  data-desc="{{ project.description }}" data-loc="{{ project.location }}">
-                <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">
                 <div class="overlay">
                     <i class="bi bi-zoom-in"></i>
                 </div>

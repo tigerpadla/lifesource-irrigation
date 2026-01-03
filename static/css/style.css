@@ -71,6 +71,19 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--ls-green) !important;
 }
 
+/* Dropdown menu styling */
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: var(--ls-green-light);
+    color: var(--ls-dark);
+}
+
+.dropdown-item:active,
+.dropdown-item.active {
+    background-color: var(--ls-green);
+    color: white;
+}
+
 .nav-link.btn-success {
     color: white !important;
 }
