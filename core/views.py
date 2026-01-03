@@ -7,8 +7,8 @@ from newsletter.models import Testimonial
 def home(request):
     """Home page view"""
     services = ServiceCategory.objects.filter(is_active=True).order_by('order')[:3]
-    projects = Project.objects.filter(featured=True).order_by('-created_at')[:6]
-    testimonials = Testimonial.objects.filter(is_active=True).order_by('-created_at')[:3]
+    projects = Project.objects.filter(featured=True).order_by('-created_at')[:8]
+    testimonials = Testimonial.objects.filter(is_active=True).order_by('-created_at')[:10]
     
     context = {
         'services': services,

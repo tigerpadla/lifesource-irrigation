@@ -9,13 +9,13 @@
     {% if service.hero_image %}
         style="background-image: url('{{ service.hero_image.url }}');"
     {% elif service.slug == 'irrigation' %}
-        style="background-image: url('{% static 'images/irrigation.jpg' %}');"
+        style="background-image: url('{% static 'images/irrigation.webp' %}');"
     {% elif service.slug == 'gardening' %}
-        style="background-image: url('{% static 'images/gardening.jpg' %}');"
+        style="background-image: url('{% static 'images/gardening.webp' %}');"
     {% elif service.slug == 'lighting' %}
-        style="background-image: url('{% static 'images/lighting.jpg' %}');"
+        style="background-image: url('{% static 'images/lighting.webp' %}');"
     {% else %}
-        style="background-image: url('{% static 'images/hero-bg.jpg' %}');"
+        style="background-image: url('{% static 'images/hero-bg.webp' %}');"
     {% endif %}>
     <div class="container position-relative text-white">
         <nav aria-label="breadcrumb" class="mb-3">

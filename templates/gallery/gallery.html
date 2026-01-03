@@ -57,22 +57,6 @@
                     <i class="bi bi-zoom-in"></i>
                 </div>
             </div>
-            
-            <!-- Insert testimonial after every 4th project -->
-            {% if forloop.counter|divisibleby:4 and testimonials %}
-                {% with testimonial=testimonials|first %}
-                {% if testimonial %}
-                <div class="gallery-item testimonial-item bg-white d-flex align-items-center p-4" style="aspect-ratio: auto;">
-                    <div class="testimonial-content">
-                        <i class="bi bi-quote text-success fs-1 opacity-50"></i>
-                        <p class="fst-italic text-muted mb-3">"{{ testimonial.quote|truncatewords:30 }}"</p>
-                        <div class="fw-bold">{{ testimonial.client_name }}</div>
-                        <small class="text-success">{{ testimonial.location }}</small>
-                    </div>
-                </div>
-                {% endif %}
-                {% endwith %}
-            {% endif %}
             {% endfor %}
         </div>
         {% else %}
@@ -86,21 +70,46 @@
     </div>
 </section>
 
-<!-- Testimonials Section -->
+<!-- Testimonials Carousel -->
 {% if testimonials %}
 <section class="py-section bg-light">
     <div class="container">
         <h2 class="section-title text-center">What Our Clients Say</h2>
-        <div class="row g-4">
-            {% for testimonial in testimonials %}
-            <div class="col-md-4 animate-on-scroll">
-                <div class="testimonial-card h-100">
-                    <p>"{{ testimonial.quote }}"</p>
-                    <div class="client-name">{{ testimonial.client_name }}</div>
-                    <div class="client-location">{{ testimonial.location }}</div>
+        
+        <div id="galleryTestimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+                {% for testimonial in testimonials %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="testimonial-carousel-card text-center p-4 p-md-5">
+                                <i class="bi bi-quote display-4 text-success opacity-25 mb-3"></i>
+                                <p class="fs-5 fst-italic text-muted mb-4">"{{ testimonial.quote }}"</p>
+                                <div class="client-name fw-bold">{{ testimonial.client_name }}</div>
+                                <div class="client-location text-success">{{ testimonial.location }}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#galleryTestimonialCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bg-success rounded-circle p-3" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#galleryTestimonialCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon bg-success rounded-circle p-3" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators position-relative mt-4">
+                {% for testimonial in testimonials %}
+                <button type="button" data-bs-target="#galleryTestimonialCarousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" aria-current="true"{% endif %} aria-label="Testimonial {{ forloop.counter }}"></button>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </section>

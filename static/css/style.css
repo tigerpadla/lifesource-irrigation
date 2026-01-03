@@ -46,11 +46,17 @@ h1, h2, h3, h4, h5, h6 {
 /* Navigation */
 .navbar {
     padding: 1rem 0;
+    z-index: 1030;
 }
 
 .navbar-brand img {
     max-height: 60px;
     width: auto;
+}
+
+/* Service Sidebar - keep below navbar */
+.col-lg-4 .sticky-top {
+    z-index: 1000;
 }
 
 .nav-link {
@@ -298,6 +304,61 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.875rem;
 }
 
+/* Testimonial Carousel */
+.testimonial-carousel-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+    margin: 0 auto;
+    max-width: 700px;
+}
+
+.testimonial-carousel-card .bi-quote {
+    display: block;
+}
+
+.testimonial-carousel-card .client-name {
+    font-size: 1.1rem;
+}
+
+.testimonial-carousel-card .client-location {
+    font-size: 0.9rem;
+}
+
+/* Carousel Controls */
+#testimonialCarousel .carousel-control-prev,
+#testimonialCarousel .carousel-control-next,
+#galleryTestimonialCarousel .carousel-control-prev,
+#galleryTestimonialCarousel .carousel-control-next {
+    width: auto;
+    opacity: 1;
+}
+
+#testimonialCarousel .carousel-control-prev-icon,
+#testimonialCarousel .carousel-control-next-icon,
+#galleryTestimonialCarousel .carousel-control-prev-icon,
+#galleryTestimonialCarousel .carousel-control-next-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-size: 50%;
+}
+
+#testimonialCarousel .carousel-indicators button,
+#galleryTestimonialCarousel .carousel-indicators button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--ls-green);
+    opacity: 0.4;
+    border: none;
+    margin: 0 5px;
+}
+
+#testimonialCarousel .carousel-indicators button.active,
+#galleryTestimonialCarousel .carousel-indicators button.active {
+    opacity: 1;
+}
+
 /* Trust Indicators */
 .trust-item {
     text-align: center;
@@ -512,6 +573,13 @@ h1, h2, h3, h4, h5, h6 {
 /* Utility Classes */
 .bg-light-green {
     background-color: #f4f7e6;
+}
+
+/* Service sidebar active state */
+.list-group-item.active.bg-light-green {
+    background-color: #f4f7e6 !important;
+    border-color: var(--ls-green) !important;
+    color: var(--ls-dark);
 }
 
 .text-green {
