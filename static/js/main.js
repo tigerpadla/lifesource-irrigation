@@ -1,4 +1,4 @@
-// LifeSource Irrigation - Main JavaScript
+// Lifesource Irrigation - Main JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
     // Smooth scroll for anchor links

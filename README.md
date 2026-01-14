@@ -1,6 +1,6 @@
-# LifeSource Irrigation 🌿
+# Lifesource Irrigation 🌿
 
-A professional website for **LifeSource Irrigation** - a full-service irrigation, gardening, and exterior lighting company serving New York City for over three decades.
+A professional website for **Lifesource Irrigation** - a full-service irrigation, gardening, and exterior lighting company serving New York City for over three decades.
 
 ![Django](https://img.shields.io/badge/Django-6.0-green)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple)
@@ -79,7 +79,7 @@ This website was developed based on the client's requirements to replace their o
 
 ### Competitor Analysis
 
-The design takes inspiration from competitor sites while maintaining LifeSource's unique identity:
+The design takes inspiration from competitor sites while maintaining Lifesource's unique identity:
 - [Rooftop Drops](https://www.rooftopdrops.com/) - Clean layout reference
 - [New York Plantings](https://newyorkplantings.com/) - Service presentation
 - [Plantwell Irrigation](https://www.plantwellirrigation.com/) - Gallery approach
@@ -351,4 +351,4 @@ The site is deployed on Heroku with the following configuration:
 
 ---
 
-*Prototype built to demonstrate proposed website design for LifeSource Irrigation, NYC.*
+*Prototype built to demonstrate proposed website design for Lifesource Irrigation, NYC.*
