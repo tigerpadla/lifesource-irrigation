@@ -4,15 +4,9 @@ from django.db import models
 class ContactInquiry(models.Model):
     """Contact form submissions"""
     SERVICE_CHOICES = [
-        ('new_installation', 'Free Estimate - New Installation'),
-        ('spring_startup', 'Spring Start-Up'),
         ('irrigation', 'Irrigation'),
-        ('repair', 'Service & Repair'),
-        ('maintenance', 'Maintenance Agreement'),
         ('lighting', 'Landscape Lighting'),
-        ('assessment', 'System Assessment'),
         ('gardening', 'Gardening Services'),
-        ('refurbishment', 'Terrace Refurbishment'),
         ('other', 'Other'),
     ]
     

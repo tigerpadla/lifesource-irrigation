@@ -20,7 +20,7 @@
             <!-- Contact Form -->
             <div class="col-lg-8 mb-5 mb-lg-0">
                 <div class="contact-form">
-                    <h3 class="mb-4">Request a Free Consultation</h3>
+                    <h3 class="mb-4">Book a Consultation</h3>
                     <p class="text-muted mb-4">
                         Fill out the form below and we'll get back to you within 24 hours. 
                         Select all services you're interested in.
@@ -72,30 +72,6 @@
                                     {% if form.phone.errors %}
                                     <div class="invalid-feedback">{{ form.phone.errors.0 }}</div>
                                     {% endif %}
-                                </div>
-                            </div>
-                        </fieldset>
-                        
-                        <!-- Property Information -->
-                        <fieldset class="mb-4">
-                            <legend class="h5 mb-3 text-success">Property Information</legend>
-                            <div class="row g-3">
-                                <div class="col-md-8">
-                                    <label for="id_address" class="form-label">Address / Neighborhood</label>
-                                    <input type="text" name="address" id="id_address" 
-                                           class="form-control" placeholder="Address or neighborhood"
-                                           value="{{ form.address.value|default:'' }}">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="id_property_type" class="form-label">Property Type</label>
-                                    <select name="property_type" id="id_property_type" class="form-select">
-                                        <option value="">Select...</option>
-                                        {% for value, label in form.fields.property_type.choices %}
-                                        {% if value %}
-                                        <option value="{{ value }}" {% if form.property_type.value == value %}selected{% endif %}>{{ label }}</option>
-                                        {% endif %}
-                                        {% endfor %}
-                                    </select>
                                 </div>
                             </div>
                         </fieldset>
