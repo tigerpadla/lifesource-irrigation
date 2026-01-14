@@ -90,32 +90,98 @@
     </div>
 </section>
 
-<!-- Trust Indicators -->
+<!-- Trust Indicators & Testimonials -->
 <section class="py-section bg-white">
     <div class="container">
-        <div class="row text-center">
-            <div class="col-md-3 col-6 animate-on-scroll">
-                <div class="trust-item">
-                    <div class="number">30+</div>
-                    <div class="label">Years Experience</div>
+        <div class="row align-items-stretch">
+            <!-- Trust Stats - Left Side -->
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <div class="trust-stats-wrapper h-100 d-flex align-items-center justify-content-center">
+                    <div class="row text-center w-100">
+                        <div class="col-6 animate-on-scroll">
+                            <div class="trust-item">
+                                <div class="number">30+</div>
+                                <div class="label">Years Experience</div>
+                            </div>
+                        </div>
+                        <div class="col-6 animate-on-scroll">
+                            <div class="trust-item">
+                                <div class="number">15</div>
+                                <div class="label">Avg. Years Client Retention</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3 col-6 animate-on-scroll">
-                <div class="trust-item">
-                    <div class="number">500+</div>
-                    <div class="label">Projects Completed</div>
-                </div>
+            
+            <!-- Divider -->
+            <div class="col-lg-1 d-none d-lg-flex justify-content-center">
+                <div class="vertical-divider"></div>
             </div>
-            <div class="col-md-3 col-6 animate-on-scroll">
-                <div class="trust-item">
-                    <div class="number">15</div>
-                    <div class="label">Avg. Years Client Retention</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 animate-on-scroll">
-                <div class="trust-item">
-                    <div class="number">NYC</div>
-                    <div class="label">Based & Serving</div>
+            
+            <!-- Testimonials Carousel - Right Side -->
+            <div class="col-lg-6">
+                <div class="testimonial-section h-100">
+                    <h3 class="testimonial-heading text-center mb-4">What Our Clients Say</h3>
+                    <div id="testimonialCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
+                        <div class="carousel-inner">
+                            {% if testimonials %}
+                                {% for testimonial in testimonials %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <div class="testimonial-card text-center">
+                                        <p class="testimonial-quote">{{ testimonial.quote }}</p>
+                                        <div class="testimonial-author">
+                                            <span class="author-name">{{ testimonial.client_name }}</span>
+                                            <span class="author-location">{{ testimonial.location }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <!-- Placeholder testimonials -->
+                                <div class="carousel-item active">
+                                    <div class="testimonial-card text-center">
+                                        <p class="testimonial-quote">LifeSource transformed our rooftop into a true oasis. The irrigation system works flawlessly.</p>
+                                        <div class="testimonial-author">
+                                            <span class="author-name">Sarah M.</span>
+                                            <span class="author-location">Upper West Side</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="testimonial-card text-center">
+                                        <p class="testimonial-quote">Declan and his team have maintained our terrace garden for over 15 years. Unmatched attention to detail.</p>
+                                        <div class="testimonial-author">
+                                            <span class="author-name">James & Linda K.</span>
+                                            <span class="author-location">Tribeca</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="testimonial-card text-center">
+                                        <p class="testimonial-quote">The lighting design they created for our garden is absolutely stunning.</p>
+                                        <div class="testimonial-author">
+                                            <span class="author-name">Michael R.</span>
+                                            <span class="author-location">Chelsea</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Carousel Indicators -->
+                        <div class="carousel-indicators position-relative mt-4">
+                            {% if testimonials %}
+                                {% for testimonial in testimonials %}
+                                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" aria-current="true"{% endif %} aria-label="Testimonial {{ forloop.counter }}"></button>
+                                {% endfor %}
+                            {% else %}
+                                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Testimonial 1"></button>
+                                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Testimonial 2"></button>
+                                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2" aria-label="Testimonial 3"></button>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -152,95 +218,6 @@
         </div>
         <div class="text-center mt-5">
             <a href="{% url 'gallery:gallery' %}" class="btn btn-success btn-lg px-5">View Full Gallery</a>
-        </div>
-    </div>
-</section>
-
-<!-- Testimonials Carousel -->
-<section class="py-section bg-white">
-    <div class="container">
-        <h2 class="section-title text-center">What Our Clients Say</h2>
-        
-        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-            <div class="carousel-inner">
-                {% if testimonials %}
-                    {% for testimonial in testimonials %}
-                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="testimonial-carousel-card text-center p-4 p-md-5">
-                                    <i class="bi bi-quote display-4 text-success opacity-25 mb-3"></i>
-                                    <p class="fs-5 fst-italic text-muted mb-4">"{{ testimonial.quote }}"</p>
-                                    <div class="client-name fw-bold">{{ testimonial.client_name }}</div>
-                                    <div class="client-location text-success">{{ testimonial.location }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% else %}
-                    <!-- Placeholder testimonials -->
-                    <div class="carousel-item active">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="testimonial-carousel-card text-center p-4 p-md-5">
-                                    <i class="bi bi-quote display-4 text-success opacity-25 mb-3"></i>
-                                    <p class="fs-5 fst-italic text-muted mb-4">"LifeSource transformed our rooftop into a true oasis. The irrigation system works flawlessly and we never have to worry about our plants."</p>
-                                    <div class="client-name fw-bold">Sarah M.</div>
-                                    <div class="client-location text-success">Upper West Side</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="testimonial-carousel-card text-center p-4 p-md-5">
-                                    <i class="bi bi-quote display-4 text-success opacity-25 mb-3"></i>
-                                    <p class="fs-5 fst-italic text-muted mb-4">"Declan and his team have maintained our terrace garden for over 15 years. Their attention to detail and knowledge is unmatched."</p>
-                                    <div class="client-name fw-bold">James & Linda K.</div>
-                                    <div class="client-location text-success">Tribeca</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="testimonial-carousel-card text-center p-4 p-md-5">
-                                    <i class="bi bi-quote display-4 text-success opacity-25 mb-3"></i>
-                                    <p class="fs-5 fst-italic text-muted mb-4">"The lighting design they created for our garden is absolutely stunning. We can finally enjoy our outdoor space in the evenings."</p>
-                                    <div class="client-name fw-bold">Michael R.</div>
-                                    <div class="client-location text-success">Chelsea</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-            
-            <!-- Carousel Controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon bg-success rounded-circle p-3" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon bg-success rounded-circle p-3" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-            
-            <!-- Carousel Indicators -->
-            <div class="carousel-indicators position-relative mt-4">
-                {% if testimonials %}
-                    {% for testimonial in testimonials %}
-                    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" aria-current="true"{% endif %} aria-label="Testimonial {{ forloop.counter }}"></button>
-                    {% endfor %}
-                {% else %}
-                    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Testimonial 1"></button>
-                    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Testimonial 2"></button>
-                    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2" aria-label="Testimonial 3"></button>
-                {% endif %}
-            </div>
         </div>
     </div>
 </section>
