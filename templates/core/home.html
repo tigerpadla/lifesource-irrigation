@@ -192,17 +192,31 @@
 <section class="py-section bg-light">
     <div class="container">
         <h2 class="section-title text-center">Our Work</h2>
+        <!-- Gallery Grid with Interspersed Testimonials -->
         <div class="gallery-grid">
-            {% if projects %}
-                {% for project in projects %}
-                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal"
-                     data-img="{{ project.image.url }}" data-title="{{ project.title }}"
-                     data-desc="{{ project.description }}" data-loc="{{ project.location }}">
-                    <img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">
-                    <div class="overlay">
-                        <i class="bi bi-zoom-in"></i>
+            {% if gallery_items %}
+                {% for item in gallery_items %}
+                    {% if item.type == 'project' %}
+                    <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal"
+                         data-img="{{ item.item.image.url }}" data-title="{{ item.item.title }}"
+                         data-desc="{{ item.item.description }}" data-loc="{{ item.item.location }}">
+                        <img src="{{ item.item.image.url }}" alt="{{ item.item.title }}" loading="lazy">
+                        <div class="overlay">
+                            <i class="bi bi-zoom-in"></i>
+                        </div>
                     </div>
-                </div>
+                    {% elif item.type == 'testimonial' %}
+                    <div class="gallery-testimonial">
+                        <div class="testimonial-content">
+                            <i class="bi bi-quote"></i>
+                            <p class="quote-text">{{ item.item.quote }}</p>
+                            <div class="client-info">
+                                <span class="client-name">{{ item.item.client_name }}</span>
+                                <span class="client-location">{{ item.item.location }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
                 {% endfor %}
             {% else %}
                 <!-- Placeholder gallery items -->

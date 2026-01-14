@@ -45,8 +45,34 @@
         </div>
         {% endif %}
         
-        <!-- Gallery Grid -->
-        {% if projects %}
+        <!-- Gallery Grid with Interspersed Testimonials -->
+        {% if gallery_items %}
+        <div class="gallery-grid">
+            {% for item in gallery_items %}
+                {% if item.type == 'project' %}
+                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" 
+                     data-img="{{ item.data.image.url }}" data-title="{{ item.data.title }}" 
+                     data-desc="{{ item.data.description }}" data-loc="{{ item.data.location }}">
+                    <img src="{{ item.data.image.url }}" alt="{{ item.data.title }}" loading="lazy">
+                    <div class="overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+                {% elif item.type == 'testimonial' %}
+                <div class="gallery-testimonial">
+                    <div class="testimonial-content">
+                        <i class="bi bi-quote"></i>
+                        <p class="quote-text">{{ item.data.quote }}</p>
+                        <div class="client-info">
+                            <span class="client-name">{{ item.data.client_name }}</span>
+                            <span class="client-location">{{ item.data.location }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% elif projects %}
         <div class="gallery-grid">
             {% for project in projects %}
             <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" 
@@ -69,51 +95,6 @@
         {% endif %}
     </div>
 </section>
-
-<!-- Testimonials Carousel -->
-{% if testimonials %}
-<section class="py-section bg-light">
-    <div class="container">
-        <h2 class="section-title text-center">What Our Clients Say</h2>
-        
-        <div id="galleryTestimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-            <div class="carousel-inner">
-                {% for testimonial in testimonials %}
-                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <div class="testimonial-carousel-card text-center p-4 p-md-5">
-                                <i class="bi bi-quote display-4 text-success opacity-25 mb-3"></i>
-                                <p class="fs-5 fst-italic text-muted mb-4">"{{ testimonial.quote }}"</p>
-                                <div class="client-name fw-bold">{{ testimonial.client_name }}</div>
-                                <div class="client-location text-success">{{ testimonial.location }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            
-            <!-- Carousel Controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#galleryTestimonialCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon bg-success rounded-circle p-3" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#galleryTestimonialCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon bg-success rounded-circle p-3" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-            
-            <!-- Carousel Indicators -->
-            <div class="carousel-indicators position-relative mt-4">
-                {% for testimonial in testimonials %}
-                <button type="button" data-bs-target="#galleryTestimonialCarousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" aria-current="true"{% endif %} aria-label="Testimonial {{ forloop.counter }}"></button>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</section>
-{% endif %}
 
 <!-- CTA -->
 <section class="py-section bg-success text-white text-center">
