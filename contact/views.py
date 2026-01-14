@@ -22,8 +22,6 @@ New inquiry received:
 Name: {inquiry.first_name} {inquiry.last_name}
 Email: {inquiry.email}
 Phone: {inquiry.phone}
-Property: {inquiry.get_property_type_display() if inquiry.property_type else 'Not specified'}
-Address: {inquiry.address or 'Not provided'}
 
 Services Requested:
 {chr(10).join('- ' + s for s in inquiry.get_services_display())}

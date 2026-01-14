@@ -10,14 +10,6 @@ class ContactInquiry(models.Model):
         ('other', 'Other'),
     ]
     
-    PROPERTY_CHOICES = [
-        ('rooftop', 'Rooftop/Terrace'),
-        ('penthouse', 'Penthouse'),
-        ('townhouse', 'Townhouse/Backyard'),
-        ('commercial', 'Commercial'),
-        ('other', 'Other'),
-    ]
-    
     REFERRAL_CHOICES = [
         ('google', 'Google Search'),
         ('referral', 'Friend/Family Referral'),
@@ -31,10 +23,6 @@ class ContactInquiry(models.Model):
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
-    
-    # Property Info
-    address = models.CharField(max_length=200, blank=True, help_text="Address or neighborhood")
-    property_type = models.CharField(max_length=20, choices=PROPERTY_CHOICES, blank=True)
     
     # Service Info
     services_needed = models.JSONField(default=list, help_text="Selected services")

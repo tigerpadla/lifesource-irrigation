@@ -19,16 +19,12 @@ class ContactForm(forms.ModelForm):
         model = ContactInquiry
         fields = [
             'first_name', 'last_name', 'email', 'phone',
-            'address', 'property_type', 'services_needed',
-            'referral_source', 'message'
+            'services_needed', 'referral_source', 'message'
         ]
         widgets = {
             'message': forms.Textarea(attrs={'rows': 4}),
-            'address': forms.TextInput(attrs={'placeholder': 'Address or neighborhood'}),
         }
         labels = {
-            'address': 'Address / Neighborhood',
-            'property_type': 'Property Type',
             'referral_source': 'How did you hear about us?',
         }
     
@@ -46,13 +42,6 @@ class ContactForm(forms.ModelForm):
                 Row(
                     Column('email', css_class='col-md-6'),
                     Column('phone', css_class='col-md-6'),
-                ),
-            ),
-            Fieldset(
-                'Property Information',
-                Row(
-                    Column('address', css_class='col-md-8'),
-                    Column('property_type', css_class='col-md-4'),
                 ),
             ),
             Fieldset(
