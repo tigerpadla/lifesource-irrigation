@@ -18,7 +18,7 @@ class ProjectCategory(models.Model):
 class Project(models.Model):
     """Gallery project/photo"""
     title = models.CharField(max_length=200)
-    category = models.ForeignKey(ProjectCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='projects')
+    categories = models.ManyToManyField(ProjectCategory, blank=True, related_name='projects')
     image = models.ImageField(upload_to='gallery/')
     description = models.TextField(blank=True)
     location = models.CharField(max_length=100, blank=True, help_text="e.g., Upper West Side")

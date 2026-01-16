@@ -12,7 +12,8 @@ def gallery(request):
     projects = list(Project.objects.all())
     
     if category_slug:
-        projects = list(Project.objects.filter(category__slug=category_slug))
+        # Filter by category (ManyToMany relationship)
+        projects = list(Project.objects.filter(categories__slug=category_slug).distinct())
     
     # Get active testimonials and shuffle them
     testimonials = list(Testimonial.objects.filter(is_active=True))

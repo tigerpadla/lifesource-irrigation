@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.querySelector('.modal-title').textContent = title || 'Project';
             this.querySelector('.modal-body img').src = img;
             this.querySelector('.modal-description').textContent = desc || '';
-            this.querySelector('.modal-location').textContent = loc ? '📍 ' + loc : '';
+            this.querySelector('.modal-location').innerHTML = loc ? '<i class="bi bi-geo-alt me-1"></i>' + loc : '';
         });
     }
 });

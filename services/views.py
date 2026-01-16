@@ -119,6 +119,10 @@ def service_list(request):
 
 def service_detail(request, slug):
     """Display a single service category with its sub-services"""
+    import random
+    from gallery.models import Project, ProjectCategory
+    from newsletter.models import Testimonial
+    
     try:
         service = get_object_or_404(ServiceCategory, slug=slug, is_active=True)
         sub_services = service.sub_services.filter(is_active=True).order_by('order')
@@ -138,10 +142,49 @@ def service_detail(request, slug):
     if not all_services.exists():
         all_services = [{'slug': s, 'title': DEFAULT_SERVICES[s]['title']} for s in DEFAULT_SERVICES]
     
+    # Map service slugs to gallery category slugs
+    # This allows flexibility if category names differ slightly
+    category_mapping = {
+        'irrigation': 'irrigation',
+        'gardening': 'gardening', 
+        'lighting': 'lighting',
+        'terrace-refurbishment': 'terrace-refurbishment',
+    }
+    
+    # Get related gallery projects for this service (ManyToMany relationship)
+    gallery_category_slug = category_mapping.get(slug, slug)
+    related_projects = list(Project.objects.filter(
+        categories__slug=gallery_category_slug
+    ).distinct().order_by('-created_at')[:5])  # Max 5 projects to leave room for 1 testimonial
+    
+    # Get one random testimonial
+    testimonials = list(Testimonial.objects.filter(is_active=True))
+    random.shuffle(testimonials)
+    
+    # Build gallery items: 5 projects + 1 testimonial = 6 items max (2 rows of 3)
+    gallery_items = []
+    
+    # Add first 2 projects
+    for p in related_projects[:2]:
+        gallery_items.append({'type': 'project', 'data': p})
+    
+    # Add 1 testimonial after first 2 projects (end of row 1)
+    if testimonials:
+        gallery_items.append({'type': 'testimonial', 'data': testimonials[0]})
+    
+    # Add remaining projects (up to 3 more for row 2)
+    for p in related_projects[2:5]:
+        gallery_items.append({'type': 'project', 'data': p})
+    
+    # Ensure max 6 items
+    gallery_items = gallery_items[:6]
+    
     context = {
         'service': service,
         'sub_services': sub_services,
         'all_services': all_services,
+        'related_projects': related_projects,
+        'gallery_items': gallery_items,
         'from_db': from_db if 'from_db' in dir() else False,
     }
     return render(request, 'services/service_detail.html', context)
