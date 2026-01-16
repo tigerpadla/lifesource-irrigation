@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import ServiceCategory, SubService
 
 
@@ -109,20 +109,12 @@ DEFAULT_SERVICES = {
 
 
 def service_list(request):
-    """Display all service categories"""
-    services = ServiceCategory.objects.filter(is_active=True).order_by('order')
-    
-    # If no services in database, use defaults
-    if not services.exists():
-        services = [
-            {'slug': slug, **data} 
-            for slug, data in DEFAULT_SERVICES.items()
-        ]
-    
-    context = {
-        'services': services,
-    }
-    return render(request, 'services/service_list.html', context)
+    """
+    Redirect to Irrigation service page.
+    The 'All Services' page has been removed per client feedback.
+    This redirect ensures any old links or bookmarks still work.
+    """
+    return redirect('services:service_detail', slug='irrigation')
 
 
 def service_detail(request, slug):
