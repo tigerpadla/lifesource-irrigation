@@ -1,6 +1,6 @@
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Row, Column, Submit, HTML, Div
+from crispy_forms.layout import Layout, Fieldset, Row, Column, Submit, Div
 from .models import ContactInquiry
 
 

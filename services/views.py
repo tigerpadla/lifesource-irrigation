@@ -7,11 +7,23 @@ DEFAULT_SERVICES = {
     'irrigation': {
         'title': 'Irrigation',
         'short_description': 'Installations, maintenance, and repairs for hands-off plant hydration.',
-        'full_description': '''Our irrigation services ensure your plants receive the perfect amount of water, 
-        automatically. From drip irrigation systems for rooftop gardens to full sprinkler installations 
-        for lawns, we design, install, and maintain systems that keep your green spaces thriving with 
-        minimal effort on your part.''',
+        'full_description': '''Our irrigation services ensure your plants receive the perfect amount of water, automatically. From drip irrigation systems for rooftop gardens to full sprinkler installations for lawns, we design, install, and maintain systems that keep your green spaces thriving with minimal effort on your part.''',
+        'extended_description': '''For over three decades, LifeSource Irrigation has been the trusted partner for NYC's most discerning property owners. We understand that every rooftop, terrace, and garden presents unique challenges—from weight restrictions and wind exposure to water pressure limitations and drainage requirements.
+
+Our team brings deep expertise in urban irrigation, combining time-tested techniques with the latest smart technology. Whether you're managing a delicate collection of rare plants or maintaining a lush green oasis above the city, we engineer solutions that deliver consistent, efficient hydration while conserving water and protecting your property.''',
         'icon': 'bi-droplet-fill',
+        'image': 'images/irrigation.webp',
+        'benefits': [
+            'Water-efficient systems that reduce consumption by up to 50%',
+            'Smart controllers with weather-based adjustments',
+            'Rooftop-specific designs accounting for weight and drainage',
+            'Seasonal service plans for year-round system health',
+        ],
+        'testimonial': {
+            'quote': 'LifeSource transformed our rooftop garden with a state-of-the-art irrigation system. Our plants have never looked better, and we barely lift a finger.',
+            'author': 'Sarah M.',
+            'location': 'Upper West Side',
+        },
         'sub_services': [
             {
                 'title': 'Design & Installation',
@@ -33,10 +45,23 @@ DEFAULT_SERVICES = {
     'gardening': {
         'title': 'Gardening',
         'short_description': 'Transformations and tender care for sacred green spaces, from bulbs to blooms.',
-        'full_description': '''Our gardening services bring life and beauty to your outdoor spaces. Whether 
-        you're dreaming of a lush rooftop retreat or need ongoing care for an established garden, our 
-        experienced team transforms and maintains gardens that inspire.''',
+        'full_description': '''Our gardening services bring life and beauty to your outdoor spaces. Whether you're dreaming of a lush rooftop retreat or need ongoing care for an established garden, our experienced team transforms and maintains gardens that inspire.''',
+        'extended_description': '''At LifeSource, we believe that every garden tells a story. Our horticulturists and garden designers work closely with you to understand your vision, whether it's a serene Japanese-inspired retreat, a vibrant cottage garden, or a modern minimalist landscape.
+
+NYC presents unique gardening challenges—extreme temperatures, limited soil depth, wind exposure, and weight restrictions on rooftops. We've spent over 30 years mastering these conditions, selecting plants that thrive in urban environments and designing gardens that flourish season after season. From intimate balcony planters to expansive penthouse terraces, we bring the same attention to detail and passion for plants to every project.''',
         'icon': 'bi-flower1',
+        'image': 'images/gardening.webp',
+        'benefits': [
+            'Expert plant selection for NYC microclimates',
+            'Year-round color and interest with seasonal rotations',
+            'Sustainable practices and organic options available',
+            'Maintenance plans tailored to your schedule and budget',
+        ],
+        'testimonial': {
+            'quote': 'The team at LifeSource turned our bare terrace into a stunning garden sanctuary. It\'s become our favorite room in the apartment.',
+            'author': 'Michael & Jennifer K.',
+            'location': 'Tribeca',
+        },
         'sub_services': [
             {
                 'title': 'Design & Installation',
@@ -58,10 +83,23 @@ DEFAULT_SERVICES = {
     'lighting': {
         'title': 'Lighting',
         'short_description': 'Customized lighting design to extend garden enjoyment long after the sun has set.',
-        'full_description': '''Extend the enjoyment of your outdoor spaces into the evening hours with our 
-        professional landscape lighting services. We design and install low-voltage lighting systems that 
-        highlight your garden's best features while providing safety and ambiance.''',
+        'full_description': '''Extend the enjoyment of your outdoor spaces into the evening hours with our professional landscape lighting services. We design and install low-voltage lighting systems that highlight your garden's best features while providing safety and ambiance.''',
+        'extended_description': '''Great landscape lighting is both an art and a science. It requires understanding how light interacts with plants, water, and architectural elements—and how to create layers of illumination that transform a garden after dark.
+
+Our lighting designers begin every project with an evening site visit, observing how natural light fades and identifying opportunities to create drama, depth, and ambiance. We use exclusively LED fixtures for energy efficiency and longevity, paired with smart controls that let you adjust scenes with a tap on your phone. From subtle pathway illumination to dramatic uplighting of specimen trees, we craft lighting designs that make your outdoor space a nighttime destination.''',
         'icon': 'bi-lightbulb-fill',
+        'image': 'images/lighting.webp',
+        'benefits': [
+            'Energy-efficient LED fixtures with 50,000+ hour lifespan',
+            'Smart controls and dimming capabilities',
+            'Dramatic effects that enhance architecture and plantings',
+            'Improved safety for steps, paths, and transitions',
+        ],
+        'testimonial': {
+            'quote': 'The lighting design LifeSource created is absolutely magical. Our terrace has become the envy of everyone who visits.',
+            'author': 'David R.',
+            'location': 'Central Park West',
+        },
         'sub_services': [
             {
                 'title': 'Design & Installation',
@@ -83,10 +121,23 @@ DEFAULT_SERVICES = {
     'terrace-refurbishment': {
         'title': 'Terrace Refurbishment',
         'short_description': 'Complete terrace renewal including power washing, repairs, and surface restoration.',
-        'full_description': '''Bring new life to tired terraces and outdoor surfaces. Our refurbishment services 
-        address everything from deep cleaning to structural repairs, ensuring your outdoor space is safe, 
-        beautiful, and ready for enjoyment.''',
+        'full_description': '''Bring new life to tired terraces and outdoor surfaces. Our refurbishment services address everything from deep cleaning to structural repairs, ensuring your outdoor space is safe, beautiful, and ready for enjoyment.''',
+        'extended_description': '''Years of exposure to NYC's harsh elements—scorching summers, freezing winters, and everything in between—take their toll on outdoor surfaces. Grime accumulates, pavers shift, wood weathers, and what was once a pristine terrace can start to look neglected.
+
+Our refurbishment team specializes in restoring outdoor spaces to their former glory. We begin with a thorough assessment, identifying not just cosmetic issues but potential structural concerns that could worsen over time. From there, we develop a comprehensive plan that may include power washing, re-grouting, wood treatment, paver releveling, and more. The result? A terrace that looks and functions like new, ready for many more years of enjoyment.''',
         'icon': 'bi-hammer',
+        'image': 'images/hero-bg.webp',
+        'benefits': [
+            'Professional-grade equipment for superior cleaning',
+            'Structural assessment to catch problems early',
+            'Eco-friendly cleaning solutions available',
+            'Protective treatments to extend surface life',
+        ],
+        'testimonial': {
+            'quote': 'We couldn\'t believe the transformation. Our 15-year-old terrace looks brand new after LifeSource\'s power washing and repairs.',
+            'author': 'Patricia L.',
+            'location': 'Greenwich Village',
+        },
         'sub_services': [
             {
                 'title': 'Power Washing',

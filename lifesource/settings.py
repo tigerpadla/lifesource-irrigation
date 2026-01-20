@@ -11,9 +11,13 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 import os
+import mimetypes
 from pathlib import Path
 import dj_database_url
 import cloudinary
+
+# Add WebP MIME type (needed for Windows)
+mimetypes.add_type("image/webp", ".webp", True)
 
 # Load environment variables from env.py if it exists (local development)
 if os.path.isfile('env.py'):
@@ -145,14 +149,25 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 
 # Storage configuration (Django 4.2+)
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+# Use WhiteNoise for production, default Django storage for development
+if DEBUG:
+    STORAGES = {
+        "default": {
+            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+else:
+    STORAGES = {
+        "default": {
+            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
 
 # Cloudinary settings - force HTTPS for all URLs
 CLOUDINARY_STORAGE = {

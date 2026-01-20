@@ -990,6 +990,21 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--ls-dark);
 }
 
+/* Content text styling for extended descriptions */
+.content-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #555;
+}
+
+.content-text p {
+    margin-bottom: 1.25rem;
+}
+
+.content-text p:last-child {
+    margin-bottom: 0;
+}
+
 .text-green {
     color: var(--ls-green);
 }
