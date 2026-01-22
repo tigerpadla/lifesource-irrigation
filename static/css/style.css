@@ -353,6 +353,13 @@ h1, h2, h3, h4, h5, h6 {
     color: white;
 }
 
+/* Gallery Modal - Constrain vertical images */
+#galleryModal .modal-body img {
+    max-height: 65vh;
+    width: auto;
+    max-width: 100%;
+}
+
 /* Gallery Testimonial Card - Modern Design */
 .gallery-testimonial {
     aspect-ratio: 1;
