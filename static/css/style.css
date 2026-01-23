@@ -869,6 +869,10 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--ls-green) !important;
 }
 
+.border-success {
+    border-color: var(--ls-green) !important;
+}
+
 /* Irish Heritage Section */
 .irish-corner {
     background: linear-gradient(135deg, #f8f9fa 0%, #f4f7e6 100%);
@@ -952,12 +956,14 @@ h1, h2, h3, h4, h5, h6 {
 /* Service Offering - Modern List Style */
 .service-offering {
     transition: all 0.3s ease;
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin-left: -0.5rem;
 }
 
 .service-offering:hover {
-    background-color: rgba(164, 187, 75, 0.05);
-    margin-left: 0.5rem;
-    padding-left: 0.5rem;
+    background-color: rgba(164, 187, 75, 0.08);
+    transform: translateX(0.5rem);
 }
 
 .service-offering-icon {
