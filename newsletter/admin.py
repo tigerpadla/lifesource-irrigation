@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.utils import timezone
+from django_summernote.admin import SummernoteModelAdmin
 from .models import Newsletter, Subscriber, Testimonial
 
 
 @admin.register(Newsletter)
-class NewsletterAdmin(admin.ModelAdmin):
+class NewsletterAdmin(SummernoteModelAdmin):
+    summernote_fields = ('content',)
     list_display = ['title', 'is_published', 'published_at', 'created_at']
     list_filter = ['is_published', 'published_at']
     list_editable = ['is_published']

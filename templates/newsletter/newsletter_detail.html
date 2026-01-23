@@ -32,8 +32,8 @@
                          class="img-fluid rounded mb-4 w-100" style="max-height: 400px; object-fit: cover;">
                     {% endif %}
                     
-                    <div class="content text-muted" style="font-size: 1.1rem; line-height: 1.8;">
-                        {{ newsletter.content|linebreaks }}
+                    <div class="newsletter-content" style="font-size: 1.1rem; line-height: 1.8;">
+                        {{ newsletter.content|safe }}
                     </div>
                     
                     {% if newsletter.irish_fact %}
@@ -51,15 +51,15 @@
                         <h6 class="text-muted mb-3">Share this article:</h6>
                         <div class="d-flex gap-2">
                             <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
-                               target="_blank" class="btn btn-outline-secondary">
+                               target="_blank" class="btn btn-outline-success">
                                 <i class="bi bi-facebook"></i>
                             </a>
                             <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ newsletter.title|urlencode }}" 
-                               target="_blank" class="btn btn-outline-secondary">
+                               target="_blank" class="btn btn-outline-success">
                                 <i class="bi bi-twitter-x"></i>
                             </a>
                             <a href="mailto:?subject={{ newsletter.title|urlencode }}&body={{ request.build_absolute_uri }}" 
-                               class="btn btn-outline-secondary">
+                               class="btn btn-outline-success">
                                 <i class="bi bi-envelope"></i>
                             </a>
                         </div>
@@ -69,7 +69,7 @@
             
             <!-- Sidebar -->
             <div class="col-lg-4">
-                <div class="sticky-top" style="top: 100px;">
+                <div class="sticky-top" style="top: 120px;">
                     <!-- Subscribe Box -->
                     <div class="card border-success mb-4">
                         <div class="card-body text-center">
