@@ -198,11 +198,16 @@
                 {% for item in gallery_items %}
                     {% if item.type == 'project' %}
                     <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal"
-                         data-img="{{ item.item.image.url }}" data-title="{{ item.item.title }}"
-                         data-desc="{{ item.item.description }}" data-loc="{{ item.item.location }}">
+                         data-project-id="{{ item.item.id }}"
+                         data-title="{{ item.item.title }}"
+                         data-desc="{{ item.item.description }}" 
+                         data-loc="{{ item.item.location }}">
                         <img src="{{ item.item.image.url }}" alt="{{ item.item.title }}" loading="lazy">
                         <div class="overlay">
                             <i class="bi bi-zoom-in"></i>
+                            {% if item.item.image_count > 1 %}
+                            <span class="image-count"><i class="bi bi-images me-1"></i>{{ item.item.image_count }}</span>
+                            {% endif %}
                         </div>
                     </div>
                     {% elif item.type == 'testimonial' %}
@@ -245,7 +250,7 @@
     </div>
 </section>
 
-<!-- Gallery Modal -->
+<!-- Gallery Modal with Carousel -->
 <div class="modal fade" id="galleryModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -253,8 +258,26 @@
                 <h5 class="modal-title">Project</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body text-center p-0">
-                <img src="" alt="" class="img-fluid">
+            <div class="modal-body p-0 position-relative">
+                <!-- Carousel -->
+                <div id="galleryCarousel" class="carousel slide" data-bs-interval="false">
+                    <div class="carousel-inner">
+                        <!-- Images will be inserted here by JavaScript -->
+                    </div>
+                    <!-- Navigation buttons (hidden if single image) -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <!-- Image counter -->
+                <div class="image-counter position-absolute bottom-0 end-0 m-3 px-3 py-1 bg-dark bg-opacity-75 text-white rounded-pill small">
+                    <span class="current-index">1</span> / <span class="total-images">1</span>
+                </div>
             </div>
             <div class="modal-footer border-0 flex-column align-items-start">
                 <p class="modal-description text-muted mb-1"></p>
@@ -263,24 +286,134 @@
         </div>
     </div>
 </div>
+
+<!-- Project images data for JavaScript -->
+<script type="application/json" id="projectImagesData">
+{
+    {% with projects_only=gallery_items|dictsort:"type" %}
+    {% for item in gallery_items %}{% if item.type == 'project' %}"{{ item.item.id }}": {
+        "images": [
+            {"url": "{{ item.item.image.url }}", "caption": ""}{% for img in item.item.additional_images.all %},
+            {"url": "{{ img.image.url }}", "caption": "{{ img.caption|escapejs }}"}{% endfor %}
+        ]
+    },
+    {% endif %}{% endfor %}
+    {% endwith %}
+    "_end": true
+}
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Image count badge */
+    .gallery-item .image-count {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        background: rgba(255, 255, 255, 0.95);
+        color: #333;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .gallery-item .image-count i {
+        font-size: 0.9rem;
+        color: var(--ls-green);
+    }
+    /* Carousel styling */
+    #galleryCarousel .carousel-item img {
+        background: #f8f9fa;
+    }
+    #galleryCarousel .carousel-control-prev,
+    #galleryCarousel .carousel-control-next {
+        width: 15%;
+        opacity: 1;
+    }
+    #galleryCarousel .carousel-control-prev-icon,
+    #galleryCarousel .carousel-control-next-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        background-color: rgba(0, 0, 0, 0.7);
+        border-radius: 50%;
+        background-size: 50%;
+    }
+</style>
 {% endblock %}
 
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const galleryModal = document.getElementById('galleryModal');
+    const carousel = document.getElementById('galleryCarousel');
+    const carouselInner = carousel.querySelector('.carousel-inner');
+    const prevBtn = carousel.querySelector('.carousel-control-prev');
+    const nextBtn = carousel.querySelector('.carousel-control-next');
+    const imageCounter = document.querySelector('.image-counter');
+    
+    // Load project images data
+    let projectImagesData = {};
+    try {
+        const dataElement = document.getElementById('projectImagesData');
+        if (dataElement) {
+            projectImagesData = JSON.parse(dataElement.textContent);
+        }
+    } catch (e) {
+        console.error('Error parsing project images data:', e);
+    }
+    
     if (galleryModal) {
         galleryModal.addEventListener('show.bs.modal', function(event) {
             const button = event.relatedTarget;
-            const img = button.getAttribute('data-img');
+            const projectId = button.getAttribute('data-project-id');
             const title = button.getAttribute('data-title');
             const desc = button.getAttribute('data-desc');
             const loc = button.getAttribute('data-loc');
             
+            // Update modal text
             this.querySelector('.modal-title').textContent = title || 'Project';
-            this.querySelector('.modal-body img').src = img;
             this.querySelector('.modal-description').textContent = desc || '';
             this.querySelector('.modal-location').innerHTML = loc ? '<i class="bi bi-geo-alt me-1"></i>' + loc : '';
+            
+            // Get images for this project
+            const projectData = projectImagesData[projectId];
+            const images = projectData ? projectData.images : [{ url: button.querySelector('img').src, caption: '' }];
+            
+            // Clear existing carousel items
+            carouselInner.innerHTML = '';
+            
+            // Add images to carousel
+            images.forEach((img, index) => {
+                const item = document.createElement('div');
+                item.className = 'carousel-item' + (index === 0 ? ' active' : '');
+                item.innerHTML = `<img src="${img.url}" class="d-block w-100" alt="${title}" style="max-height: 70vh; object-fit: contain;">`;
+                carouselInner.appendChild(item);
+            });
+            
+            // Show/hide navigation based on image count
+            const showNav = images.length > 1;
+            prevBtn.style.display = showNav ? 'flex' : 'none';
+            nextBtn.style.display = showNav ? 'flex' : 'none';
+            imageCounter.style.display = showNav ? 'block' : 'none';
+            
+            // Update counter
+            document.querySelector('.current-index').textContent = '1';
+            document.querySelector('.total-images').textContent = images.length;
+            
+            // Reset carousel to first slide
+            const bsCarousel = bootstrap.Carousel.getOrCreateInstance(carousel);
+            bsCarousel.to(0);
+        });
+        
+        // Update counter on slide change
+        carousel.addEventListener('slid.bs.carousel', function(event) {
+            document.querySelector('.current-index').textContent = event.to + 1;
         });
     }
 });

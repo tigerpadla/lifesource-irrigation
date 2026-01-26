@@ -14,6 +14,8 @@
         style="background-image: url('{% static 'images/gardening.webp' %}');"
     {% elif service.slug == 'lighting' %}
         style="background-image: url('{% static 'images/lighting.webp' %}');"
+    {% elif service.slug == 'terrace-refurbishment' %}
+        style="background-image: url('{% static 'images/terrace-services-hero.webp' %}');"
     {% else %}
         style="background-image: url('{% static 'images/hero-bg.webp' %}');"
     {% endif %}>
@@ -45,13 +47,13 @@
                 <!-- Featured Image -->
                 <div class="mb-5">
                     {% if service.slug == 'irrigation' %}
-                    <img src="{% static 'images/irrigation-services.jpg' %}" alt="Professional irrigation system installation" class="img-fluid rounded-3 shadow-sm w-100" style="max-height: 400px; object-fit: cover;">
+                    <img src="{% static 'images/irrigation-services.webp' %}" alt="Professional irrigation system installation" class="img-fluid rounded-3 shadow-sm w-100" style="max-height: 400px; object-fit: cover;">
                     {% elif service.slug == 'gardening' %}
-                    <img src="{% static 'images/gardening-services.jpg' %}" alt="Beautiful rooftop garden in NYC" class="img-fluid rounded-3 shadow-sm w-100" style="max-height: 400px; object-fit: cover;">
+                    <img src="{% static 'images/gardening-services.webp' %}" alt="Beautiful rooftop garden in NYC" class="img-fluid rounded-3 shadow-sm w-100" style="max-height: 400px; object-fit: cover;">
                     {% elif service.slug == 'lighting' %}
-                    <img src="{% static 'images/lighting-services.jpg' %}" alt="Landscape lighting design" class="img-fluid rounded-3 shadow-sm w-100" style="max-height: 400px; object-fit: cover;">
+                    <img src="{% static 'images/lighting-services.webp' %}" alt="Landscape lighting design" class="img-fluid rounded-3 shadow-sm w-100" style="max-height: 400px; object-fit: cover;">
                     {% else %}
-                    <img src="{% static 'images/hero-bg.webp' %}" alt="NYC terrace refurbishment" class="img-fluid rounded-3 shadow-sm w-100" style="max-height: 400px; object-fit: cover;">
+                    <img src="{% static 'images/terrace-services.webp' %}" alt="NYC terrace refurbishment" class="img-fluid rounded-3 shadow-sm w-100" style="max-height: 400px; object-fit: cover;">
                     {% endif %}
                 </div>
 
@@ -251,7 +253,7 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="gallery-card position-relative overflow-hidden rounded-3 shadow-sm" 
                          data-bs-toggle="modal" data-bs-target="#galleryModal"
-                         data-image="{{ item.data.image.url }}"
+                         data-project-id="{{ item.data.id }}"
                          data-title="{{ item.data.title }}"
                          data-description="{{ item.data.description }}"
                          data-location="{{ item.data.location }}"
@@ -269,6 +271,11 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {% if item.data.image_count > 1 %}
+                        <div class="image-count position-absolute" style="top: 12px; right: 12px; background: rgba(255,255,255,0.95); color: #333; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 2;">
+                            <i class="bi bi-images me-1" style="color: var(--ls-green);"></i>{{ item.data.image_count }}
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
                 {% elif item.type == 'testimonial' %}
@@ -301,7 +308,7 @@
     </div>
 </section>
 
-<!-- Gallery Modal -->
+<!-- Gallery Modal with Carousel -->
 <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -309,8 +316,26 @@
                 <h5 class="modal-title" id="galleryModalLabel">Project Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body text-center p-0">
-                <img src="" id="modalImage" class="img-fluid" alt="">
+            <div class="modal-body p-0 position-relative">
+                <!-- Carousel -->
+                <div id="galleryCarousel" class="carousel slide" data-bs-interval="false">
+                    <div class="carousel-inner">
+                        <!-- Images will be inserted here by JavaScript -->
+                    </div>
+                    <!-- Navigation buttons (hidden if single image) -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <!-- Image counter -->
+                <div class="image-counter position-absolute bottom-0 end-0 m-3 px-3 py-1 bg-dark bg-opacity-75 text-white rounded-pill small">
+                    <span class="current-index">1</span> / <span class="total-images">1</span>
+                </div>
             </div>
             <div class="modal-footer flex-column align-items-start border-0">
                 <p id="modalDescription" class="text-muted mb-1"></p>
@@ -319,23 +344,57 @@
         </div>
     </div>
 </div>
+
+<!-- Project images data for JavaScript -->
+<script type="application/json" id="projectImagesData">
+{
+    {% for item in gallery_items %}{% if item.type == 'project' %}
+    "{{ item.data.id }}": {
+        "images": [
+            {"url": "{{ item.data.image.url }}", "caption": ""}
+            {% for img in item.data.additional_images.all %},
+            {"url": "{{ img.image.url }}", "caption": "{{ img.caption|escapejs }}"}
+            {% endfor %}
+        ]
+    }{% if not forloop.last %},{% endif %}
+    {% endif %}{% endfor %}
+}
+</script>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-// Gallery modal functionality for service page
 document.addEventListener('DOMContentLoaded', function() {
+    const galleryModal = document.getElementById('galleryModal');
+    const carousel = document.getElementById('galleryCarousel');
+    const carouselInner = carousel.querySelector('.carousel-inner');
+    const prevBtn = carousel.querySelector('.carousel-control-prev');
+    const nextBtn = carousel.querySelector('.carousel-control-next');
+    const imageCounter = document.querySelector('.image-counter');
+    
+    // Load project images data
+    let projectImagesData = {};
+    try {
+        const dataElement = document.getElementById('projectImagesData');
+        if (dataElement) {
+            projectImagesData = JSON.parse(dataElement.textContent);
+        }
+    } catch (e) {
+        console.error('Error parsing project images data:', e);
+    }
+    
+    // Gallery card click handler
     const galleryCards = document.querySelectorAll('.gallery-card[data-bs-toggle="modal"]');
     
     galleryCards.forEach(card => {
         card.addEventListener('click', function() {
-            const image = this.dataset.image;
+            const projectId = this.dataset.projectId;
             const title = this.dataset.title;
             const description = this.dataset.description;
             const location = this.dataset.location;
             
-            document.getElementById('modalImage').src = image;
-            document.getElementById('galleryModalLabel').textContent = title;
+            // Update modal text
+            document.getElementById('galleryModalLabel').textContent = title || 'Project';
             document.getElementById('modalDescription').textContent = description || '';
             
             const locationEl = document.getElementById('modalLocation');
@@ -345,7 +404,41 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 locationEl.style.display = 'none';
             }
+            
+            // Get images for this project
+            const projectData = projectImagesData[projectId];
+            const images = projectData ? projectData.images : [{ url: this.querySelector('img').src, caption: '' }];
+            
+            // Clear existing carousel items
+            carouselInner.innerHTML = '';
+            
+            // Add images to carousel
+            images.forEach((img, index) => {
+                const item = document.createElement('div');
+                item.className = 'carousel-item' + (index === 0 ? ' active' : '');
+                item.innerHTML = `<img src="${img.url}" class="d-block w-100" alt="${title}" style="max-height: 70vh; object-fit: contain;">`;
+                carouselInner.appendChild(item);
+            });
+            
+            // Show/hide navigation based on image count
+            const showNav = images.length > 1;
+            prevBtn.style.display = showNav ? 'flex' : 'none';
+            nextBtn.style.display = showNav ? 'flex' : 'none';
+            imageCounter.style.display = showNav ? 'block' : 'none';
+            
+            // Update counter
+            document.querySelector('.current-index').textContent = '1';
+            document.querySelector('.total-images').textContent = images.length;
+            
+            // Reset carousel to first slide
+            const bsCarousel = bootstrap.Carousel.getOrCreateInstance(carousel);
+            bsCarousel.to(0);
         });
+    });
+    
+    // Update counter on slide change
+    carousel.addEventListener('slid.bs.carousel', function(event) {
+        document.querySelector('.current-index').textContent = event.to + 1;
     });
 });
 </script>
