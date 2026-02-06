@@ -17,16 +17,31 @@ class ProjectCategory(models.Model):
 
 class Project(models.Model):
     """Gallery project/photo"""
+    SEASON_CHOICES = [
+        ('spring', 'Spring'),
+        ('summer', 'Summer'),
+        ('fall', 'Fall'),
+        ('winter', 'Winter'),
+        ('holiday', 'Holiday Decor'),
+    ]
+    
     title = models.CharField(max_length=200)
     categories = models.ManyToManyField(ProjectCategory, blank=True, related_name='projects')
+    season = models.CharField(
+        max_length=20, 
+        choices=SEASON_CHOICES, 
+        blank=True, 
+        help_text="Assign a season to group photos in the gallery"
+    )
     image = models.ImageField(upload_to='gallery/', help_text="Main/cover image for this project")
     description = models.TextField(blank=True)
     location = models.CharField(max_length=100, blank=True, help_text="e.g., Upper West Side")
     featured = models.BooleanField(default=False, help_text="Show on homepage")
+    order = models.PositiveIntegerField(default=0, help_text="Order within the season section (lower = first)")
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['order', '-created_at']
 
     def __str__(self):
         return self.title

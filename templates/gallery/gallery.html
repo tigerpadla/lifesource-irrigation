@@ -52,6 +52,33 @@
         border-radius: 50%;
         background-size: 50%;
     }
+    /* Season section headings */
+    .season-section {
+        margin-bottom: 3rem;
+    }
+    .season-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--ls-green);
+    }
+    .season-header i {
+        font-size: 1.5rem;
+        color: var(--ls-green);
+    }
+    .season-header h3 {
+        margin: 0;
+        font-family: var(--font-heading);
+        font-size: 1.75rem;
+        color: var(--ls-green);
+    }
+    .season-header small {
+        color: #777;
+        font-size: 0.9rem;
+        margin-left: auto;
+    }
 </style>
 {% endblock %}
 
@@ -83,56 +110,49 @@
         </div>
         {% endif %}
         
-        <!-- Gallery Grid with Interspersed Testimonials -->
-        {% if gallery_items %}
-        <div class="gallery-grid">
-            {% for item in gallery_items %}
-                {% if item.type == 'project' %}
-                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" 
-                     data-project-id="{{ item.data.id }}"
-                     data-title="{{ item.data.title }}" 
-                     data-desc="{{ item.data.description }}" 
-                     data-loc="{{ item.data.location }}">
-                    <img src="{{ item.data.image.url }}" alt="{{ item.data.title }}" loading="lazy">
-                    <div class="overlay">
-                        <i class="bi bi-zoom-in"></i>
-                        {% if item.data.image_count > 1 %}
-                        <span class="image-count"><i class="bi bi-images me-1"></i>{{ item.data.image_count }}</span>
-                        {% endif %}
-                    </div>
-                </div>
-                {% elif item.type == 'testimonial' %}
-                <div class="gallery-testimonial">
-                    <div class="testimonial-content">
-                        <i class="bi bi-quote"></i>
-                        <p class="quote-text">{{ item.data.quote }}</p>
-                        <div class="client-info">
-                            <span class="client-name">{{ item.data.client_name }}</span>
-                            <span class="client-location">{{ item.data.location }}</span>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-        {% elif projects %}
-        <div class="gallery-grid">
-            {% for project in projects %}
-            <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" 
-                 data-project-id="{{ project.id }}"
-                 data-title="{{ project.title }}" 
-                 data-desc="{{ project.description }}" 
-                 data-loc="{{ project.location }}">
-                <img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">
-                <div class="overlay">
-                    <i class="bi bi-zoom-in"></i>
-                    {% if project.image_count > 1 %}
-                    <span class="image-count"><i class="bi bi-images me-1"></i>{{ project.image_count }}</span>
+        <!-- Gallery Grouped by Season -->
+        {% if season_groups %}
+            {% for season_key, group in season_groups.items %}
+            <div class="season-section">
+                <div class="season-header">
+                    <i class="bi {{ group.meta.icon }}"></i>
+                    <h3>{{ group.meta.label }}</h3>
+                    {% if group.meta.description %}
+                    <small class="d-none d-md-block">{{ group.meta.description }}</small>
                     {% endif %}
+                </div>
+                <div class="gallery-grid">
+                    {% for item in group.items %}
+                        {% if item.type == 'project' %}
+                        <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" 
+                             data-project-id="{{ item.data.id }}"
+                             data-title="{{ item.data.title }}" 
+                             data-desc="{{ item.data.description }}" 
+                             data-loc="{{ item.data.location }}">
+                            <img src="{{ item.data.image.url }}" alt="{{ item.data.title }}" loading="lazy">
+                            <div class="overlay">
+                                <i class="bi bi-zoom-in"></i>
+                                {% if item.data.image_count > 1 %}
+                                <span class="image-count"><i class="bi bi-images me-1"></i>{{ item.data.image_count }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% elif item.type == 'testimonial' %}
+                        <div class="gallery-testimonial">
+                            <div class="testimonial-content">
+                                <i class="bi bi-quote"></i>
+                                <p class="quote-text">{{ item.data.quote }}</p>
+                                <div class="client-info">
+                                    <span class="client-name">{{ item.data.client_name }}</span>
+                                    <span class="client-location">{{ item.data.location }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
             {% endfor %}
-        </div>
         {% else %}
         <!-- Placeholder Gallery -->
         <div class="text-center py-5">

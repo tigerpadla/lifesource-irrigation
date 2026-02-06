@@ -27,9 +27,9 @@ class ProjectCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ['title', 'image_preview', 'get_categories', 'location', 'image_count', 'featured', 'created_at']
-    list_filter = ['categories', 'featured']
-    list_editable = ['featured']
+    list_display = ['title', 'image_preview', 'season', 'get_categories', 'location', 'order', 'image_count', 'featured', 'created_at']
+    list_filter = ['season', 'categories', 'featured']
+    list_editable = ['season', 'order', 'featured']
     search_fields = ['title', 'description', 'location']
     filter_horizontal = ['categories']
     inlines = [ProjectImageInline]
@@ -37,6 +37,10 @@ class ProjectAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': ('title', 'image', 'description')
+        }),
+        ('Season & Ordering', {
+            'fields': ('season', 'order'),
+            'description': 'Assign a season to group this project in the gallery. Set order to control position within the season.'
         }),
         ('Details', {
             'fields': ('categories', 'location', 'featured')
@@ -48,6 +52,21 @@ class ProjectAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" style="max-height: 50px; max-width: 80px; object-fit: cover; border-radius: 4px;" />', obj.image.url)
         return "-"
     image_preview.short_description = "Cover"
+    
+    def season_display(self, obj):
+        season_icons = {
+            'spring': '🌸',
+            'summer': '☀️',
+            'fall': '🍂',
+            'winter': '❄️',
+            'holiday': '🎄',
+        }
+        if obj.season:
+            icon = season_icons.get(obj.season, '')
+            return format_html('{} {}', icon, obj.get_season_display())
+        return format_html('<span style="color: #999;">—</span>')
+    season_display.short_description = 'Season'
+    season_display.admin_order_field = 'season'
     
     def get_categories(self, obj):
         return ", ".join([c.name for c in obj.categories.all()])
