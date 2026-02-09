@@ -59,7 +59,6 @@ class ProjectAdmin(admin.ModelAdmin):
             'summer': '☀️',
             'fall': '🍂',
             'winter': '❄️',
-            'holiday': '🎄',
         }
         if obj.season:
             icon = season_icons.get(obj.season, '')

@@ -5,13 +5,12 @@ from .models import Project, ProjectCategory
 from newsletter.models import Testimonial
 
 # Season display order and metadata
-SEASON_ORDER = ['spring', 'summer', 'fall', 'winter', 'holiday']
+SEASON_ORDER = ['spring', 'summer', 'fall', 'winter']
 SEASON_META = {
     'spring': {'label': 'Spring', 'icon': 'bi-flower2', 'description': 'Fresh beginnings and new growth'},
     'summer': {'label': 'Summer', 'icon': 'bi-sun', 'description': 'Lush gardens in full bloom'},
     'fall': {'label': 'Fall', 'icon': 'bi-wind', 'description': 'Golden tones and seasonal transitions'},
     'winter': {'label': 'Winter', 'icon': 'bi-snow', 'description': 'Winter care and preparation'},
-    'holiday': {'label': 'Holiday Decor', 'icon': 'bi-gift-fill', 'description': 'Festive seasonal decorations'},
 }
 
 

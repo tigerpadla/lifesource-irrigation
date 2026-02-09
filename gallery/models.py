@@ -22,7 +22,6 @@ class Project(models.Model):
         ('summer', 'Summer'),
         ('fall', 'Fall'),
         ('winter', 'Winter'),
-        ('holiday', 'Holiday Decor'),
     ]
     
     title = models.CharField(max_length=200)
