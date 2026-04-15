@@ -21,8 +21,6 @@ Our team brings deep expertise in urban irrigation, combining time-tested techni
         ],
         'testimonial': {
             'quote': 'LifeSource transformed our rooftop garden with a state-of-the-art irrigation system. Our plants have never looked better, and we barely lift a finger.',
-            'author': 'Sarah M.',
-            'location': 'Upper West Side',
         },
         'sub_services': [
             {
@@ -59,8 +57,6 @@ NYC presents unique gardening challenges—extreme temperatures, limited soil de
         ],
         'testimonial': {
             'quote': 'The team at LifeSource turned our bare terrace into a stunning garden sanctuary. It\'s become our favorite room in the apartment.',
-            'author': 'Michael & Jennifer K.',
-            'location': 'Tribeca',
         },
         'sub_services': [
             {
@@ -97,8 +93,6 @@ Our lighting designers begin every project with an evening site visit, observing
         ],
         'testimonial': {
             'quote': 'The lighting design LifeSource created is absolutely magical. Our terrace has become the envy of everyone who visits.',
-            'author': 'David R.',
-            'location': 'Central Park West',
         },
         'sub_services': [
             {
@@ -135,8 +129,6 @@ Our refurbishment team specializes in restoring outdoor spaces to their former g
         ],
         'testimonial': {
             'quote': 'We couldn\'t believe the transformation. Our 15-year-old terrace looks brand new after LifeSource\'s power washing and repairs.',
-            'author': 'Patricia L.',
-            'location': 'Greenwich Village',
         },
         'sub_services': [
             {
