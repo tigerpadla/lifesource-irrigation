@@ -166,12 +166,16 @@
                         <blockquote class="mb-3">
                             <p class="fst-italic mb-0">"{{ service.testimonial.quote }}"</p>
                         </blockquote>
+                        {% if service.testimonial.author or service.testimonial.location %}
                         <footer class="text-muted">
+                            {% if service.testimonial.author %}
                             <strong>{{ service.testimonial.author }}</strong>
+                            {% endif %}
                             {% if service.testimonial.location %}
-                            <span class="ms-2">— {{ service.testimonial.location }}</span>
+                            <span class="{% if service.testimonial.author %}ms-2{% endif %}">{% if service.testimonial.author %}— {% endif %}{{ service.testimonial.location }}</span>
                             {% endif %}
                         </footer>
+                        {% endif %}
                     </div>
                 </div>
                 {% endif %}
@@ -280,15 +284,19 @@
                 </div>
                 {% elif item.type == 'testimonial' %}
                 <div class="col-md-6 col-lg-4">
-                    <div class="service-testimonial-card rounded-3 shadow-sm">
+                    <div class="service-testimonial-card rounded-3 shadow-sm {% if item.data.client_name or item.data.location %}has-meta{% else %}quote-only{% endif %}">
                         <div class="quote-mark">"</div>
                         <p class="quote-text">"{{ item.data.quote|truncatewords:25 }}"</p>
+                        {% if item.data.client_name or item.data.location %}
                         <div class="client-info">
+                            {% if item.data.client_name %}
                             <strong>{{ item.data.client_name }}</strong>
+                            {% endif %}
                             {% if item.data.location %}
                             <span class="location">{{ item.data.location }}</span>
                             {% endif %}
                         </div>
+                        {% endif %}
                     </div>
                 </div>
                 {% endif %}

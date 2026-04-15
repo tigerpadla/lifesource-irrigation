@@ -464,6 +464,10 @@ h1, h2, h3, h4, h5, h6 {
     color: rgba(255, 255, 255, 0.8);
 }
 
+.gallery-testimonial .testimonial-content.quote-only .quote-text {
+    margin-bottom: 0;
+}
+
 /* Gallery Testimonial - Medium screens */
 @media (max-width: 1200px) {
     .gallery-testimonial {
@@ -754,6 +758,10 @@ h1, h2, h3, h4, h5, h6 {
 .testimonial-author .author-location {
     color: var(--ls-green);
     font-size: 0.9rem;
+}
+
+.testimonial-card.quote-only .testimonial-quote {
+    margin-bottom: 0;
 }
 
 /* Carousel Indicators Override */
@@ -1166,6 +1174,10 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: auto;
     position: relative;
     z-index: 1;
+}
+
+.service-testimonial-card.quote-only .quote-text {
+    margin-bottom: 0;
 }
 
 .service-testimonial-card .client-info strong {

@@ -128,12 +128,18 @@
                             {% if testimonials %}
                                 {% for testimonial in testimonials %}
                                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                    <div class="testimonial-card text-center">
+                                    <div class="testimonial-card text-center {% if testimonial.client_name or testimonial.location %}has-meta{% else %}quote-only{% endif %}">
                                         <p class="testimonial-quote">{{ testimonial.quote }}</p>
+                                        {% if testimonial.client_name or testimonial.location %}
                                         <div class="testimonial-author">
+                                            {% if testimonial.client_name %}
                                             <span class="author-name">{{ testimonial.client_name }}</span>
+                                            {% endif %}
+                                            {% if testimonial.location %}
                                             <span class="author-location">{{ testimonial.location }}</span>
+                                            {% endif %}
                                         </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 {% endfor %}
@@ -212,13 +218,19 @@
                     </div>
                     {% elif item.type == 'testimonial' %}
                     <div class="gallery-testimonial">
-                        <div class="testimonial-content">
+                        <div class="testimonial-content {% if item.item.client_name or item.item.location %}has-meta{% else %}quote-only{% endif %}">
                             <i class="bi bi-quote"></i>
                             <p class="quote-text">{{ item.item.quote }}</p>
+                            {% if item.item.client_name or item.item.location %}
                             <div class="client-info">
+                                {% if item.item.client_name %}
                                 <span class="client-name">{{ item.item.client_name }}</span>
+                                {% endif %}
+                                {% if item.item.location %}
                                 <span class="client-location">{{ item.item.location }}</span>
+                                {% endif %}
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                     {% endif %}

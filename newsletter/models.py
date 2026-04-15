@@ -38,8 +38,8 @@ class Newsletter(models.Model):
 
 class Testimonial(models.Model):
     """Client testimonials"""
-    client_name = models.CharField(max_length=100)
-    location = models.CharField(max_length=100, help_text="e.g., Upper West Side")
+    client_name = models.CharField(max_length=100, blank=True)
+    location = models.CharField(max_length=100, blank=True, help_text="e.g., Upper West Side")
     quote = models.TextField()
     project_type = models.CharField(max_length=50, blank=True, help_text="e.g., Rooftop Garden")
     is_active = models.BooleanField(default=True)
@@ -49,4 +49,7 @@ class Testimonial(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"{self.client_name} - {self.location}"
+        parts = [value for value in [self.client_name, self.location] if value]
+        if parts:
+            return " - ".join(parts)
+        return (self.quote[:37] + "...") if len(self.quote) > 40 else self.quote

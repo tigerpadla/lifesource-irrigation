@@ -139,13 +139,19 @@
                         </div>
                         {% elif item.type == 'testimonial' %}
                         <div class="gallery-testimonial">
-                            <div class="testimonial-content">
+                            <div class="testimonial-content {% if item.data.client_name or item.data.location %}has-meta{% else %}quote-only{% endif %}">
                                 <i class="bi bi-quote"></i>
                                 <p class="quote-text">{{ item.data.quote }}</p>
+                                {% if item.data.client_name or item.data.location %}
                                 <div class="client-info">
+                                    {% if item.data.client_name %}
                                     <span class="client-name">{{ item.data.client_name }}</span>
+                                    {% endif %}
+                                    {% if item.data.location %}
                                     <span class="client-location">{{ item.data.location }}</span>
+                                    {% endif %}
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
                         {% endif %}
