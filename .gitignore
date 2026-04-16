@@ -77,6 +77,8 @@ core.Microsoft*
 core.mongo*
 core.python*
 cloudinary_python.txt
+.postman/
+postman/globals/workspace.globals.yaml
 
 # =====================
 # Heroku / misc
