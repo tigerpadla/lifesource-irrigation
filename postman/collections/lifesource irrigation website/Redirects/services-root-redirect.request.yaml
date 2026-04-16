@@ -1,0 +1,17 @@
+$kind: http-request
+name: 'services root redirect'
+method: GET
+url: '{{baseUrl}}/services/'
+order: 4000
+event:
+  - listen: test
+    script:
+      type: text/javascript
+      exec:
+        - 'pm.test("Status code is 301 or 302", function () {'
+        - '  pm.expect([301, 302]).to.include(pm.response.code);'
+        - '});'
+        - 'pm.test("Redirect location points to irrigation service", function () {'
+        - '  const location = pm.response.headers.get("Location") || "";'
+        - '  pm.expect(location).to.match(/\/services\/irrigation\/?$/);'
+        - '});'

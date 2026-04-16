@@ -1,0 +1,48 @@
+$kind: http-request
+name: 'contact form submit'
+method: POST
+url: '{{baseUrl}}/contact/'
+order: 3000
+headers:
+  - key: Content-Type
+    value: application/x-www-form-urlencoded
+body:
+  type: urlencoded
+  content:
+    - key: first_name
+      value: 'Max'
+    - key: last_name
+      value: 'Tester'
+    - key: email
+      value: 'max@example.com'
+    - key: phone
+      value: '(212) 555-0123'
+    - key: services_needed
+      value: 'irrigation'
+      description: 'Repeat this key to submit multiple services.'
+    - key: services_needed
+      value: 'lighting'
+    - key: referral_source
+      value: 'google'
+      description: 'Allowed values: google, referral, returning, social, other.'
+    - key: message
+      value: 'Interested in irrigation and lighting for a rooftop terrace project.'
+    - key: csrfmiddlewaretoken
+      value: '{{csrfToken}}'
+      description: 'Optional token when testing with CSRF enabled.'
+event:
+  - listen: test
+    script:
+      type: text/javascript
+      exec:
+        - 'pm.test("Status is redirect or CSRF rejection", function () {'
+        - '  pm.expect([302, 403]).to.include(pm.response.code);'
+        - '});'
+        - 'pm.test("Redirect target is contact success when request is accepted", function () {'
+        - '  if (pm.response.code === 302) {'
+        - '    const location = pm.response.headers.get("Location") || "";'
+        - '    pm.expect(location).to.match(/\/contact\/success\/?$/);'
+        - '  } else {'
+        - '    pm.expect(pm.response.code).to.eql(403);'
+        - '  }'
+        - '});'

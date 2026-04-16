@@ -1,0 +1,36 @@
+$kind: http-request
+name: 'newsletter subscribe ajax post'
+method: POST
+url: '{{baseUrl}}/newsletter/subscribe/'
+order: 3200
+headers:
+  - key: Content-Type
+    value: application/x-www-form-urlencoded
+  - key: X-Requested-With
+    value: XMLHttpRequest
+  - key: X-CSRFToken
+    value: '{{csrfToken}}'
+body:
+  type: urlencoded
+  content:
+    - key: email
+      value: 'max@example.com'
+    - key: csrfmiddlewaretoken
+      value: '{{csrfToken}}'
+event:
+  - listen: test
+    script:
+      type: text/javascript
+      exec:
+        - 'pm.test("Status is JSON success or CSRF rejection", function () {'
+        - '  pm.expect([200, 403]).to.include(pm.response.code);'
+        - '});'
+        - 'pm.test("JSON body has success and message when request is accepted", function () {'
+        - '  if (pm.response.code === 200) {'
+        - '    const responseBody = pm.response.json();'
+        - '    pm.expect(responseBody).to.have.property("success");'
+        - '    pm.expect(responseBody).to.have.property("message");'
+        - '  } else {'
+        - '    pm.expect(pm.response.code).to.eql(403);'
+        - '  }'
+        - '});'

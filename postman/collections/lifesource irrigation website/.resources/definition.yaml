@@ -1,0 +1,15 @@
+$kind: collection
+name: LifeSource Irrigation Website
+description: Clean endpoint-accurate Postman collection for the Django
+  server-rendered website. Includes only real public routes grouped into Pages,
+  Forms, and Redirects.
+variables:
+  baseUrl: https://lifesource-irrigation-c72210771a40.herokuapp.com/
+  serviceSlug: irrigation
+  galleryCategory: irrigation
+  newsletterSlug: lifesource-nyc-newsletter-spring-edition
+  invalidServiceSlug: not-a-real-service-slug
+  invalidNewsletterSlug: not-a-real-newsletter-slug
+  invalidGalleryCategory: not-a-real-gallery-category
+  nextPath: /newsletter/
+  csrfToken: ""

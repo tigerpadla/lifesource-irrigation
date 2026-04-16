@@ -1,0 +1,21 @@
+$kind: http-request
+name: 'about page'
+method: GET
+url: '{{baseUrl}}/about/'
+order: 1100
+event:
+  - listen: test
+    script:
+      type: text/javascript
+      exec:
+        - 'pm.test("Status code is 200", function () {'
+        - '  pm.response.to.have.status(200);'
+        - '});'
+        - 'pm.test("Content-Type is HTML", function () {'
+        - '  const contentType = pm.response.headers.get("Content-Type") || "";'
+        - '  pm.expect(contentType.toLowerCase()).to.include("text/html");'
+        - '});'
+        - 'pm.test("About page contains primary heading", function () {'
+        - '  const body = pm.response.text();'
+        - '  pm.expect(body).to.include("Our Team for Your Dreams");'
+        - '});'

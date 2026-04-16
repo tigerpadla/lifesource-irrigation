@@ -1,0 +1,26 @@
+$kind: http-request
+name: 'gallery invalid category behavior'
+method: GET
+url: '{{baseUrl}}/gallery/'
+order: 1450
+queryParams:
+  - key: category
+    value: '{{invalidGalleryCategory}}'
+    description: 'Intentional invalid category to verify graceful gallery behavior.'
+event:
+  - listen: test
+    script:
+      type: text/javascript
+      exec:
+        - 'pm.test("Status code is 200 with invalid gallery category", function () {'
+        - '  pm.response.to.have.status(200);'
+        - '});'
+        - 'pm.test("Content-Type is HTML", function () {'
+        - '  const contentType = pm.response.headers.get("Content-Type") || "";'
+        - '  pm.expect(contentType.toLowerCase()).to.include("text/html");'
+        - '});'
+        - 'pm.test("Gallery page still renders base heading", function () {'
+        - '  const body = pm.response.text();'
+        - '  pm.expect(body).to.include("Our Gallery");'
+        - '  pm.expect(body).to.not.include("Internal Server Error");'
+        - '});'

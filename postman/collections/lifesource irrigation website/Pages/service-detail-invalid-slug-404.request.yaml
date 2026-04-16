@@ -1,0 +1,21 @@
+$kind: http-request
+name: 'service detail invalid slug (404)'
+method: GET
+url: '{{baseUrl}}/services/:slug/'
+order: 1250
+pathVariables:
+  - key: slug
+    value: '{{invalidServiceSlug}}'
+    description: 'Intentional invalid slug to verify 404 behavior.'
+event:
+  - listen: test
+    script:
+      type: text/javascript
+      exec:
+        - 'pm.test("Status code is 404 for invalid service slug", function () {'
+        - '  pm.response.to.have.status(404);'
+        - '});'
+        - 'pm.test("Content-Type is HTML on 404", function () {'
+        - '  const contentType = pm.response.headers.get("Content-Type") || "";'
+        - '  pm.expect(contentType.toLowerCase()).to.include("text/html");'
+        - '});'

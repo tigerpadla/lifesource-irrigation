@@ -1,0 +1,22 @@
+$kind: http-request
+name: 'contact success page'
+method: GET
+url: '{{baseUrl}}/contact/success/'
+order: 1600
+event:
+  - listen: test
+    script:
+      type: text/javascript
+      exec:
+        - 'pm.test("Status code is 200", function () {'
+        - '  pm.response.to.have.status(200);'
+        - '});'
+        - 'pm.test("Content-Type is HTML", function () {'
+        - '  const contentType = pm.response.headers.get("Content-Type") || "";'
+        - '  pm.expect(contentType.toLowerCase()).to.include("text/html");'
+        - '});'
+        - 'pm.test("Success page confirms message receipt", function () {'
+        - '  const body = pm.response.text();'
+        - '  pm.expect(body).to.include("Thank You!");'
+        - '  pm.expect(body).to.include("We\'ve received your message");'
+        - '});'

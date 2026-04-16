@@ -1,0 +1,35 @@
+$kind: http-request
+name: 'newsletter subscribe form post'
+method: POST
+url: '{{baseUrl}}/newsletter/subscribe/'
+order: 3100
+headers:
+  - key: Content-Type
+    value: application/x-www-form-urlencoded
+body:
+  type: urlencoded
+  content:
+    - key: email
+      value: 'max@example.com'
+    - key: next
+      value: '{{nextPath}}'
+      description: 'Template forms send this to control redirect destination.'
+    - key: csrfmiddlewaretoken
+      value: '{{csrfToken}}'
+      description: 'Optional token when testing with CSRF enabled.'
+event:
+  - listen: test
+    script:
+      type: text/javascript
+      exec:
+        - 'pm.test("Status is redirect or CSRF rejection", function () {'
+        - '  pm.expect([302, 403]).to.include(pm.response.code);'
+        - '});'
+        - 'pm.test("Redirect respects next path when request is accepted", function () {'
+        - '  if (pm.response.code === 302) {'
+        - '    const location = pm.response.headers.get("Location") || "";'
+        - '    pm.expect(location).to.match(/^\//);'
+        - '  } else {'
+        - '    pm.expect(pm.response.code).to.eql(403);'
+        - '  }'
+        - '});'

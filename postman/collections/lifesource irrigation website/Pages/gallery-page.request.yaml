@@ -1,0 +1,21 @@
+$kind: http-request
+name: 'gallery page'
+method: GET
+url: '{{baseUrl}}/gallery/'
+order: 1300
+event:
+  - listen: test
+    script:
+      type: text/javascript
+      exec:
+        - 'pm.test("Status code is 200", function () {'
+        - '  pm.response.to.have.status(200);'
+        - '});'
+        - 'pm.test("Content-Type is HTML", function () {'
+        - '  const contentType = pm.response.headers.get("Content-Type") || "";'
+        - '  pm.expect(contentType.toLowerCase()).to.include("text/html");'
+        - '});'
+        - 'pm.test("Gallery page contains gallery heading", function () {'
+        - '  const body = pm.response.text();'
+        - '  pm.expect(body).to.include("Our Gallery");'
+        - '});'

@@ -1,0 +1,21 @@
+$kind: http-request
+name: 'newsletter detail invalid slug (404)'
+method: GET
+url: '{{baseUrl}}/newsletter/:slug/'
+order: 1850
+pathVariables:
+  - key: slug
+    value: '{{invalidNewsletterSlug}}'
+    description: 'Intentional invalid slug to verify 404 behavior.'
+event:
+  - listen: test
+    script:
+      type: text/javascript
+      exec:
+        - 'pm.test("Status code is 404 for invalid newsletter slug", function () {'
+        - '  pm.response.to.have.status(404);'
+        - '});'
+        - 'pm.test("Content-Type is HTML on 404", function () {'
+        - '  const contentType = pm.response.headers.get("Content-Type") || "";'
+        - '  pm.expect(contentType.toLowerCase()).to.include("text/html");'
+        - '});'

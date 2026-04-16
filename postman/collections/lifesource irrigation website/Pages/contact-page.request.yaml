@@ -1,0 +1,21 @@
+$kind: http-request
+name: 'contact page'
+method: GET
+url: '{{baseUrl}}/contact/'
+order: 1500
+event:
+  - listen: test
+    script:
+      type: text/javascript
+      exec:
+        - 'pm.test("Status code is 200", function () {'
+        - '  pm.response.to.have.status(200);'
+        - '});'
+        - 'pm.test("Content-Type is HTML", function () {'
+        - '  const contentType = pm.response.headers.get("Content-Type") || "";'
+        - '  pm.expect(contentType.toLowerCase()).to.include("text/html");'
+        - '});'
+        - 'pm.test("Contact page contains consultation call-to-action", function () {'
+        - '  const body = pm.response.text();'
+        - '  pm.expect(body).to.include("Book a Consultation");'
+        - '});'
