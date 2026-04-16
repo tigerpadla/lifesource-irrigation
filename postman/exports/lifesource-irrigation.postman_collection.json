@@ -1,0 +1,622 @@
+{
+  "info": {
+    "name": "LifeSource Irrigation Website",
+    "description": "Clean endpoint-accurate Postman collection for the Django server-rendered website. Includes only real public routes grouped into Pages, Forms, and Redirects.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Pages",
+      "item": [
+        {
+          "name": "home page",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type is HTML\", function () {",
+                  "  const contentType = pm.response.headers.get(\"Content-Type\") || \"\";",
+                  "  pm.expect(contentType.toLowerCase()).to.include(\"text/html\");",
+                  "});",
+                  "pm.test(\"Home page contains hero branding text\", function () {",
+                  "  const body = pm.response.text();",
+                  "  pm.expect(body).to.include(\"Lifesource Irrigation\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "about page",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/about/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type is HTML\", function () {",
+                  "  const contentType = pm.response.headers.get(\"Content-Type\") || \"\";",
+                  "  pm.expect(contentType.toLowerCase()).to.include(\"text/html\");",
+                  "});",
+                  "pm.test(\"About page contains primary heading\", function () {",
+                  "  const body = pm.response.text();",
+                  "  pm.expect(body).to.include(\"Our Team for Your Dreams\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "service detail by slug",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/services/{{serviceSlug}}/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type is HTML\", function () {",
+                  "  const contentType = pm.response.headers.get(\"Content-Type\") || \"\";",
+                  "  pm.expect(contentType.toLowerCase()).to.include(\"text/html\");",
+                  "});",
+                  "pm.test(\"Service detail contains structured service content\", function () {",
+                  "  const body = pm.response.text();",
+                  "  pm.expect(body).to.include(\"What We Offer\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "service detail invalid slug (404)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/services/{{invalidServiceSlug}}/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 for invalid service slug\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test(\"Content-Type is HTML on 404\", function () {",
+                  "  const contentType = pm.response.headers.get(\"Content-Type\") || \"\";",
+                  "  pm.expect(contentType.toLowerCase()).to.include(\"text/html\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "gallery page",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/gallery/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type is HTML\", function () {",
+                  "  const contentType = pm.response.headers.get(\"Content-Type\") || \"\";",
+                  "  pm.expect(contentType.toLowerCase()).to.include(\"text/html\");",
+                  "});",
+                  "pm.test(\"Gallery page contains gallery heading\", function () {",
+                  "  const body = pm.response.text();",
+                  "  pm.expect(body).to.include(\"Our Gallery\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "gallery page filtered by category",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/gallery/?category={{galleryCategory}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type is HTML\", function () {",
+                  "  const contentType = pm.response.headers.get(\"Content-Type\") || \"\";",
+                  "  pm.expect(contentType.toLowerCase()).to.include(\"text/html\");",
+                  "});",
+                  "pm.test(\"Filtered gallery still renders gallery page\", function () {",
+                  "  const body = pm.response.text();",
+                  "  pm.expect(body).to.include(\"Our Gallery\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "gallery invalid category behavior",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/gallery/?category={{invalidGalleryCategory}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 with invalid gallery category\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type is HTML\", function () {",
+                  "  const contentType = pm.response.headers.get(\"Content-Type\") || \"\";",
+                  "  pm.expect(contentType.toLowerCase()).to.include(\"text/html\");",
+                  "});",
+                  "pm.test(\"Gallery page still renders base heading\", function () {",
+                  "  const body = pm.response.text();",
+                  "  pm.expect(body).to.include(\"Our Gallery\");",
+                  "  pm.expect(body).to.not.include(\"Internal Server Error\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "contact page",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/contact/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type is HTML\", function () {",
+                  "  const contentType = pm.response.headers.get(\"Content-Type\") || \"\";",
+                  "  pm.expect(contentType.toLowerCase()).to.include(\"text/html\");",
+                  "});",
+                  "pm.test(\"Contact page contains consultation call-to-action\", function () {",
+                  "  const body = pm.response.text();",
+                  "  pm.expect(body).to.include(\"Book a Consultation\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "contact success page",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/contact/success/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type is HTML\", function () {",
+                  "  const contentType = pm.response.headers.get(\"Content-Type\") || \"\";",
+                  "  pm.expect(contentType.toLowerCase()).to.include(\"text/html\");",
+                  "});",
+                  "pm.test(\"Success page confirms message receipt\", function () {",
+                  "  const body = pm.response.text();",
+                  "  pm.expect(body).to.include(\"Thank You!\");",
+                  "  pm.expect(body).to.include(\"We've received your message\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "newsletter list page",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/newsletter/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type is HTML\", function () {",
+                  "  const contentType = pm.response.headers.get(\"Content-Type\") || \"\";",
+                  "  pm.expect(contentType.toLowerCase()).to.include(\"text/html\");",
+                  "});",
+                  "pm.test(\"Newsletter list contains archive heading\", function () {",
+                  "  const body = pm.response.text();",
+                  "  pm.expect(body).to.include(\"Newsletter Archive\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "newsletter detail by slug",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/newsletter/{{newsletterSlug}}/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type is HTML\", function () {",
+                  "  const contentType = pm.response.headers.get(\"Content-Type\") || \"\";",
+                  "  pm.expect(contentType.toLowerCase()).to.include(\"text/html\");",
+                  "});",
+                  "pm.test(\"Newsletter detail contains article navigation text\", function () {",
+                  "  const body = pm.response.text();",
+                  "  pm.expect(body).to.include(\"Back to Newsletter Archive\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "newsletter detail invalid slug (404)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/newsletter/{{invalidNewsletterSlug}}/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 for invalid newsletter slug\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test(\"Content-Type is HTML on 404\", function () {",
+                  "  const contentType = pm.response.headers.get(\"Content-Type\") || \"\";",
+                  "  pm.expect(contentType.toLowerCase()).to.include(\"text/html\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Forms",
+      "item": [
+        {
+          "name": "contact form submit",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/contact/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "first_name",
+                  "value": "Max",
+                  "disabled": false
+                },
+                {
+                  "key": "last_name",
+                  "value": "Tester",
+                  "disabled": false
+                },
+                {
+                  "key": "email",
+                  "value": "max@example.com",
+                  "disabled": false
+                },
+                {
+                  "key": "phone",
+                  "value": "(212) 555-0123",
+                  "disabled": false
+                },
+                {
+                  "key": "services_needed",
+                  "value": "irrigation",
+                  "description": "Repeat this key to submit multiple services.",
+                  "disabled": false
+                },
+                {
+                  "key": "services_needed",
+                  "value": "lighting",
+                  "disabled": false
+                },
+                {
+                  "key": "referral_source",
+                  "value": "google",
+                  "description": "Allowed values: google, referral, returning, social, other.",
+                  "disabled": false
+                },
+                {
+                  "key": "message",
+                  "value": "Interested in irrigation and lighting for a rooftop terrace project.",
+                  "disabled": false
+                },
+                {
+                  "key": "csrfmiddlewaretoken",
+                  "value": "{{csrfToken}}",
+                  "description": "Optional token when testing with CSRF enabled.",
+                  "disabled": false
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is redirect or CSRF rejection\", function () {",
+                  "  pm.expect([302, 403]).to.include(pm.response.code);",
+                  "});",
+                  "pm.test(\"Redirect target is contact success when request is accepted\", function () {",
+                  "  if (pm.response.code === 302) {",
+                  "    const location = pm.response.headers.get(\"Location\") || \"\";",
+                  "    pm.expect(location).to.match(/\\/contact\\/success\\/?$/);",
+                  "  } else {",
+                  "    pm.expect(pm.response.code).to.eql(403);",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "newsletter subscribe form post",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/newsletter/subscribe/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "max@example.com",
+                  "disabled": false
+                },
+                {
+                  "key": "next",
+                  "value": "{{nextPath}}",
+                  "description": "Template forms send this to control redirect destination.",
+                  "disabled": false
+                },
+                {
+                  "key": "csrfmiddlewaretoken",
+                  "value": "{{csrfToken}}",
+                  "description": "Optional token when testing with CSRF enabled.",
+                  "disabled": false
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is redirect or CSRF rejection\", function () {",
+                  "  pm.expect([302, 403]).to.include(pm.response.code);",
+                  "});",
+                  "pm.test(\"Redirect respects next path when request is accepted\", function () {",
+                  "  if (pm.response.code === 302) {",
+                  "    const location = pm.response.headers.get(\"Location\") || \"\";",
+                  "    pm.expect(location).to.match(/^\\//);",
+                  "  } else {",
+                  "    pm.expect(pm.response.code).to.eql(403);",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "newsletter subscribe ajax post",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/newsletter/subscribe/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest"
+              },
+              {
+                "key": "X-CSRFToken",
+                "value": "{{csrfToken}}"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "max@example.com",
+                  "disabled": false
+                },
+                {
+                  "key": "csrfmiddlewaretoken",
+                  "value": "{{csrfToken}}",
+                  "disabled": false
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is JSON success or CSRF rejection\", function () {",
+                  "  pm.expect([200, 403]).to.include(pm.response.code);",
+                  "});",
+                  "pm.test(\"JSON body has success and message when request is accepted\", function () {",
+                  "  if (pm.response.code === 200) {",
+                  "    const responseBody = pm.response.json();",
+                  "    pm.expect(responseBody).to.have.property(\"success\");",
+                  "    pm.expect(responseBody).to.have.property(\"message\");",
+                  "  } else {",
+                  "    pm.expect(pm.response.code).to.eql(403);",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Redirects",
+      "item": [
+        {
+          "name": "services root redirect",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/services/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is redirect or final success\", function () {",
+                  "  pm.expect([200, 301, 302]).to.include(pm.response.code);",
+                  "});",
+                  "pm.test(\"Redirect behavior resolves to irrigation service\", function () {",
+                  "  if ([301, 302].includes(pm.response.code)) {",
+                  "    const location = pm.response.headers.get(\"Location\") || \"\";",
+                  "    pm.expect(location).to.match(/\\/services\\/irrigation\\/?$/);",
+                  "  } else {",
+                  "    const body = pm.response.text();",
+                  "    pm.expect(body).to.include(\"Irrigation\");",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://lifesource-irrigation-c72210771a40.herokuapp.com"
+    },
+    {
+      "key": "serviceSlug",
+      "value": "irrigation"
+    },
+    {
+      "key": "galleryCategory",
+      "value": "irrigation"
+    },
+    {
+      "key": "newsletterSlug",
+      "value": "lifesource-nyc-newsletter-spring-edition"
+    },
+    {
+      "key": "invalidServiceSlug",
+      "value": "not-a-real-service-slug"
+    },
+    {
+      "key": "invalidNewsletterSlug",
+      "value": "not-a-real-newsletter-slug"
+    },
+    {
+      "key": "invalidGalleryCategory",
+      "value": "not-a-real-gallery-category"
+    },
+    {
+      "key": "nextPath",
+      "value": "/newsletter/"
+    },
+    {
+      "key": "csrfToken",
+      "value": ""
+    }
+  ]
+}

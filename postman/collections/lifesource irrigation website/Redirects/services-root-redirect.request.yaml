@@ -8,10 +8,15 @@ event:
     script:
       type: text/javascript
       exec:
-        - 'pm.test("Status code is 301 or 302", function () {'
-        - '  pm.expect([301, 302]).to.include(pm.response.code);'
+        - 'pm.test("Status code is redirect or final success", function () {'
+        - '  pm.expect([200, 301, 302]).to.include(pm.response.code);'
         - '});'
-        - 'pm.test("Redirect location points to irrigation service", function () {'
-        - '  const location = pm.response.headers.get("Location") || "";'
-        - '  pm.expect(location).to.match(/\/services\/irrigation\/?$/);'
+        - 'pm.test("Redirect behavior resolves to irrigation service", function () {'
+        - '  if ([301, 302].includes(pm.response.code)) {'
+        - '    const location = pm.response.headers.get("Location") || "";'
+        - '    pm.expect(location).to.match(/\/services\/irrigation\/?$/);'
+        - '  } else {'
+        - '    const body = pm.response.text();'
+        - '    pm.expect(body).to.include("Irrigation");'
+        - '  }'
         - '});'

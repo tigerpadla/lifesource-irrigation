@@ -18,5 +18,5 @@ event:
         - 'pm.test("Success page confirms message receipt", function () {'
         - '  const body = pm.response.text();'
         - '  pm.expect(body).to.include("Thank You!");'
-        - '  pm.expect(body).to.include("We\'ve received your message");'
+        - "  pm.expect(body).to.include(\"We've received your message\");"
         - '});'

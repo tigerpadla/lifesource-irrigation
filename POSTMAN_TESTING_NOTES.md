@@ -27,12 +27,27 @@ Production URL for manual cross-check: https://lifesource-irrigation-c72210771a4
   - Content-Type includes text/html
   - meaningful page-specific text content
 - Redirect checks now cover:
-  - /services/ returns 301 or 302
-  - Location header targets /services/irrigation/
+  - /services/ resolves to irrigation route (either explicit 30x redirect or auto-followed 200)
 - Negative-path checks now cover:
   - /services/<invalid-slug>/ => 404
   - /newsletter/<invalid-slug>/ => 404
   - /gallery/?category=<invalid-slug> => graceful 200 HTML render with gallery heading present
+
+## Importable Postman Artifacts (Visible Scripts + Runnable Tests)
+
+Generated standard Postman files:
+- postman/exports/lifesource-irrigation.postman_collection.json
+- postman/exports/lifesource-irrigation.postman_environment.json
+
+These files are intended for direct import into Postman Desktop/Web so the Tests scripts are visible in the request Scripts tab and runnable in Collection Runner/Newman.
+
+Verified execution command:
+- npx -y newman run postman/exports/lifesource-irrigation.postman_collection.json -e postman/exports/lifesource-irrigation.postman_environment.json
+
+Latest verified result:
+- 16 requests executed
+- 42 assertions executed
+- 0 failures
 
 ## What Was Fixed From Earlier Generated Collection
 
