@@ -1237,24 +1237,28 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-/* About Page Declan Placeholder */
-.declan-photo-placeholder {
-    width: min(100%, 420px);
-    aspect-ratio: 3 / 4.1;
-    border-radius: 16px;
-    border: 1px solid rgba(107, 122, 48, 0.35);
-    background: linear-gradient(
-        160deg,
-        rgba(197, 214, 122, 0.20) 0%,
-        rgba(255, 255, 255, 0.90) 52%,
-        rgba(164, 187, 75, 0.14) 100%
-    );
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+/* About Page Declan Image */
+.declan-photo-frame {
+    width: 100%;
+    max-width: 760px;
+    border-radius: 14px;
     overflow: hidden;
+    border: 1px solid rgba(107, 122, 48, 0.24);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+    background: #f5f7ef;
+}
+
+.declan-profile-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 540px;
+    object-fit: cover;
+    object-position: center 35%;
 }
 
 @media (max-width: 991.98px) {
-    .declan-photo-placeholder {
-        width: min(100%, 360px);
+    .declan-photo-frame {
+        max-width: 520px;
     }
 }
