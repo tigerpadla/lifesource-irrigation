@@ -33,6 +33,14 @@ staticfiles/
 media/
 
 # =====================
+# Database backups (NEVER commit)
+# =====================
+backups/
+*.dump
+lifesource-db-backup-*.dump
+lifesource-django-data-*.json
+
+# =====================
 # Test / coverage / build artifacts
 # =====================
 htmlcov/
